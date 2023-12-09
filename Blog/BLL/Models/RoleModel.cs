@@ -1,4 +1,5 @@
-﻿using Blog.DAL.Entities;
+﻿using Blog.Common.Enums;
+using Blog.DAL.Entities;
 
 namespace Blog.BLL.Models
 {
@@ -7,7 +8,7 @@ namespace Blog.BLL.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public RoleType RoleType { get; set; }
 
-        public ICollection<UserModel> Users { get; set; }
     }
 }

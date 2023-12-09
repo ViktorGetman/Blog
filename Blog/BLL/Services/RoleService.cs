@@ -43,6 +43,7 @@ namespace Blog.BLL.Services
             var entity = await context.Roles.FirstOrDefaultAsync(x => x.Id == model.Id);
             entity.Name = model.Name;
             entity.Description = model.Description;
+            entity.RoleType = model.RoleType;
 
 
             context.Roles.Update(entity);

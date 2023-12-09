@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
+using Blog.Common.Enums;
 using Blog.PLL.DTO.Role;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.PLL.Controlers
@@ -46,6 +48,7 @@ namespace Blog.PLL.Controlers
 
         [HttpPost]
         [Route("")]
+        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
         public async Task<IActionResult> Add(AddRoleDto request)
         {
             var model = _mapper.Map<AddRoleDto, RoleModel>(request);
@@ -57,6 +60,7 @@ namespace Blog.PLL.Controlers
 
         [HttpPut]
         [Route("")]
+        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
         public async Task<IActionResult> Edit([FromBody] UpdateRoleDto dto)
         {
 
@@ -69,6 +73,7 @@ namespace Blog.PLL.Controlers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             await _service.Delete(id);

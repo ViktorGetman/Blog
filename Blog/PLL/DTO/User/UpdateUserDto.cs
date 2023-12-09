@@ -7,7 +7,7 @@
         public string LastName { get; set; }
         public int Age { get; set; }
         public string Photo { get; set; }
-        public long RoleId { get; set; }
+        public long [] RoleIds { get; set; }
 
     }
 }

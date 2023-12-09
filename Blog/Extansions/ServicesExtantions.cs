@@ -26,6 +26,7 @@ namespace Blog.Extansions
             serviceCollection.AddSingleton<IUserService, UserService>();
             serviceCollection.AddSingleton<ITagService, TagService>();
             serviceCollection.AddSingleton<IRoleService, RoleService>();
+            serviceCollection.AddSingleton<IAuthenticationService, AuthenticationService>();
             return serviceCollection;
         }
     }

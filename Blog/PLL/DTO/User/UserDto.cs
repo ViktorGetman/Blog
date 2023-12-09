@@ -13,6 +13,6 @@ namespace Blog.PLL.DTO.User
         public int Age { get; set; }
         public string Email { get; set; }
         public string Photo { get; set; }
-        public long RoleId { get; set; }
+        public long[] RoleIds { get; set; }
     }
 }

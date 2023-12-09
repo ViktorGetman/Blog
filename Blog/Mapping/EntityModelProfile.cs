@@ -9,7 +9,11 @@ namespace Blog.Mapping
         public EntityModelProfile() 
         {
             CreateMap<CommentEntity, CommentModel>().ReverseMap();
-            CreateMap<UserEntity, UserModel>().ReverseMap();
+            CreateMap<UserEntity, UserModel>()
+                .ForMember(dest => dest.RoleIds, opt => opt.MapFrom(src => src.Roles.Select(x=>x.RoleId).ToList()))
+                .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.Roles.Select(x => x.Role.RoleType).ToList()))
+                .ReverseMap()
+                .ForMember(dest => dest.Roles, opt => opt.Ignore());
             CreateMap<PostEntity, PostModel>().ReverseMap();
             CreateMap<TagEntity, TagModel>().ReverseMap();
             CreateMap<RoleEntity, RoleModel>().ReverseMap();

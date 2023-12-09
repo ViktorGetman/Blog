@@ -1,5 +1,6 @@
 using Blog.DAL;
 using Blog.Extansions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 IConfiguration configuration = new ConfigurationBuilder()
@@ -20,8 +21,17 @@ builder.Services.AddAutoMapper();
 builder.Services.AddBlogServices();
 builder.Services.AddDbContextFactory<BlogDbContext>(x=>x.UseSqlite(connectionString));
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/login";
+    });
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -31,8 +41,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 
