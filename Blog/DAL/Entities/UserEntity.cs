@@ -9,6 +9,7 @@
         public string Password { get; set; }
         public string Email { get; set; }
         public string Photo { get; set; }
+        public ICollection<UserRoleEntity> Roles { get; set; }
         public ICollection<CommentEntity> Comments { get; set; }
         public ICollection<PostEntity> Posts { get; set; }
 

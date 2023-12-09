@@ -1,21 +1,22 @@
 ﻿using AutoMapper;
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
-using Blog.PLL.DTO.Post;
+using Blog.PLL.DTO.Role;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.PLL.Controlers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PostController : Controller
+
+    public class RoleController : Controller
     {
 
 
-        private IPostService _service;
+        private IRoleService _service;
         private IMapper _mapper;
 
-        public PostController(IPostService service, IMapper mapper)
+        public RoleController(IRoleService service, IMapper mapper)
         {
 
             _service = service;
@@ -25,28 +26,29 @@ namespace Blog.PLL.Controlers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetPost()
+        public async Task<IActionResult> GetRole()
         {
             var models = await _service.Get();
-            var dto = models.Select(x => _mapper.Map<PostModel, PostDto>(x)).ToArray();
+            var dto = models.Select(x => _mapper.Map<RoleModel, RoleDto>(x)).ToArray();
 
             return StatusCode(200, dto);
         }
+
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetPostByUserId(long id)
+        public async Task<IActionResult> GetRoleById(long id)
         {
-            var model = await _service.GetByUserId(id);
-            var dto = _mapper.Map<PostModel, PostDto>(model);
+            var model = await _service.GetById(id);
+            var dto = _mapper.Map<RoleModel, RoleDto>(model);
 
             return StatusCode(200, dto);
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> Add(AddPostDto request)
+        public async Task<IActionResult> Add(AddRoleDto request)
         {
-            var model = _mapper.Map<AddPostDto, PostModel>(request);
+            var model = _mapper.Map<AddRoleDto, RoleModel>(request);
             await _service.Create(model);
 
             return StatusCode(200);
@@ -55,10 +57,10 @@ namespace Blog.PLL.Controlers
 
         [HttpPut]
         [Route("")]
-        public async Task<IActionResult> Edit([FromBody] UpdatePostDto dto)
+        public async Task<IActionResult> Edit([FromBody] UpdateRoleDto dto)
         {
 
-            var model = _mapper.Map<UpdatePostDto, PostModel>(dto);
+            var model = _mapper.Map<UpdateRoleDto, RoleModel>(dto);
             await _service.Update(model);
             return StatusCode(200);
 
@@ -74,6 +76,6 @@ namespace Blog.PLL.Controlers
             return StatusCode(200);
 
         }
+    
     }
 }
-

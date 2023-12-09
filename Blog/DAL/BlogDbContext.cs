@@ -16,6 +16,9 @@ namespace Blog.DAL
         public DbSet<PostEntity> Posts { get; set; }
         public DbSet<CommentEntity> Comments { get; set; }
         public DbSet<TagEntity> Tags { get; set; }
+        public DbSet<RoleEntity> Roles { get; set; }
+        public DbSet<UserRoleEntity> UserRoles { get; set; }
+
 
 
 
@@ -29,6 +32,9 @@ namespace Blog.DAL
             modelBuilder.ApplyConfiguration(new PostConfiguration());
             modelBuilder.ApplyConfiguration(new CommentConfiguration());
             modelBuilder.ApplyConfiguration(new TagConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
 

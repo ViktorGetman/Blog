@@ -12,6 +12,7 @@ namespace Blog.Extansions
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new EntityModelProfile());
+                mc.AddProfile(new ModelDtoProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
@@ -24,6 +25,7 @@ namespace Blog.Extansions
             serviceCollection.AddSingleton<IPostService, PostService>();
             serviceCollection.AddSingleton<IUserService, UserService>();
             serviceCollection.AddSingleton<ITagService, TagService>();
+            serviceCollection.AddSingleton<IRoleService, RoleService>();
             return serviceCollection;
         }
     }

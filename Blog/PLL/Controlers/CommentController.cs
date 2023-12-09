@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Blog.PLL.Controlers
 {
     [ApiController]
+    [Route("[controller]")]
     public class CommentController : Controller
     {
 
@@ -22,9 +23,7 @@ namespace Blog.PLL.Controlers
             _mapper = mapper;
         }
 
-        /// <summary>
-        /// Просмотр списка комментариев
-        /// </summary>
+
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetComment()
@@ -43,11 +42,7 @@ namespace Blog.PLL.Controlers
 
             return StatusCode(200, dto);
         }
-        // TODO: Задание: напишите запрос на удаление устройства
 
-        /// <summary>
-        /// Добавление нового устройства
-        /// </summary>
         [HttpPost]
         [Route("")]
         public async Task<IActionResult> Add(AddCommentDto request)
@@ -58,9 +53,7 @@ namespace Blog.PLL.Controlers
             return StatusCode(200);
         }
 
-        /// <summary>
-        /// Обновление существующего устройства
-        /// </summary>
+
         [HttpPut]
         [Route("")]
         public async Task<IActionResult> Edit([FromBody] UpdateCommentDto dto)
@@ -72,9 +65,7 @@ namespace Blog.PLL.Controlers
 
         }
 
-        /// <summary>
-        /// Удаление существующего устройства
-        /// </summary>
+
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] long id)
