@@ -1,22 +1,21 @@
 ﻿using AutoMapper;
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
-using Blog.PLL.DTO.Comment;
+using Blog.PLL.DTO.Tag;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace Blog.PLL.Controlers
+namespace Blog.PLL.Controlers.Api
 {
     [ApiController]
-    [Route("[controller]")]
-    public class CommentController : Controller
+    [Route("api/[controller]")]
+    public class TagController : Controller
     {
 
 
-        private ICommentService _service;
+        private ITagService _service;
         private IMapper _mapper;
 
-        public CommentController(ICommentService service, IMapper mapper)
+        public TagController(ITagService service, IMapper mapper)
         {
 
             _service = service;
@@ -26,28 +25,28 @@ namespace Blog.PLL.Controlers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetComment()
+        public async Task<IActionResult> GetTag()
         {
             var models = await _service.Get();
-            var dto = models.Select(x => _mapper.Map<CommentModel, CommentDto>(x)).ToArray();
+            var dto = models.Select(x => _mapper.Map<TagModel, TagDto>(x)).ToArray();
 
             return StatusCode(200, dto);
         }
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetCommentById(long id)
+        public async Task<IActionResult> GetTagById(long id)
         {
             var model = await _service.GetById(id);
-            var dto = _mapper.Map<CommentModel, CommentDto>(model);
+            var dto = _mapper.Map<TagModel, TagDto>(model);
 
             return StatusCode(200, dto);
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> Add(AddCommentDto request)
+        public async Task<IActionResult> Add(AddTagDto request)
         {
-            var model = _mapper.Map<AddCommentDto, CommentModel>(request);
+            var model = _mapper.Map<AddTagDto, TagModel>(request);
             await _service.Create(model);
 
             return StatusCode(200);
@@ -56,10 +55,10 @@ namespace Blog.PLL.Controlers
 
         [HttpPut]
         [Route("")]
-        public async Task<IActionResult> Edit([FromBody] UpdateCommentDto dto)
+        public async Task<IActionResult> Edit([FromBody] UpdateTagDto dto)
         {
 
-            var model = _mapper.Map<UpdateCommentDto, CommentModel>(dto);
+            var model = _mapper.Map<UpdateTagDto, TagModel>(dto);
             await _service.Update(model);
             return StatusCode(200);
 

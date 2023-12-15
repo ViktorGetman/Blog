@@ -10,7 +10,6 @@ namespace Blog.PLL.DTO.Post
         public string PostName { get; set; }
         public string PostContent { get; set; }
         public long UserId { get; set; }
-        public UserEntity User { get; set; }
         public ICollection<CommentDto> Comments { get; set; }
         public ICollection<TagDto> Tags { get; set; }
    }

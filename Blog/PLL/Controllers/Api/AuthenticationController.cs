@@ -10,10 +10,10 @@ using System;
 using IAuthenticationService = Blog.BLL.Interfaces.IAuthenticationService;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace Blog.PLL.Controlers
+namespace Blog.PLL.Controlers.Api
 {
     [ApiController]
-    [Route("")]
+    [Route("api/")]
     public class AuthenticationController : Controller
     {
         private IMapper _mapper;
@@ -51,7 +51,7 @@ namespace Blog.PLL.Controlers
         [HttpPost]
         [Route("logout")]
         public async Task<IActionResult> Logout()
-        { 
+        {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return StatusCode(200, "Успешная деавторизация");
         }

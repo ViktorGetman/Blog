@@ -17,6 +17,7 @@ namespace Blog.Mapping
             CreateMap<PostEntity, PostModel>().ReverseMap();
             CreateMap<TagEntity, TagModel>().ReverseMap();
             CreateMap<RoleEntity, RoleModel>().ReverseMap();
+            CreateMap<UserEntity, UserShortModel>().ReverseMap();
         }
     }
 }

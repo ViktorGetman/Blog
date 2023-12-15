@@ -13,6 +13,7 @@ namespace Blog.Extansions
             {
                 mc.AddProfile(new EntityModelProfile());
                 mc.AddProfile(new ModelDtoProfile());
+                mc.AddProfile(new ModelViewModelProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

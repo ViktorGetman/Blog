@@ -1,24 +1,21 @@
 ﻿using AutoMapper;
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
-using Blog.Common.Enums;
-using Blog.PLL.DTO.Role;
-using Microsoft.AspNetCore.Authorization;
+using Blog.PLL.DTO.User;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blog.PLL.Controlers
+namespace Blog.PLL.Controlers.Api
 {
     [ApiController]
-    [Route("[controller]")]
-
-    public class RoleController : Controller
+    [Route("api/[controller]")]
+    public class UserController : Controller
     {
 
 
-        private IRoleService _service;
+        private IUserService _service;
         private IMapper _mapper;
 
-        public RoleController(IRoleService service, IMapper mapper)
+        public UserController(IUserService service, IMapper mapper)
         {
 
             _service = service;
@@ -28,30 +25,29 @@ namespace Blog.PLL.Controlers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetRole()
+        public async Task<IActionResult> GetUser()
         {
             var models = await _service.Get();
-            var dto = models.Select(x => _mapper.Map<RoleModel, RoleDto>(x)).ToArray();
+            var dto = models.Select(x => _mapper.Map<UserModel, UserDto>(x)).ToArray();
 
             return StatusCode(200, dto);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetRoleById(long id)
+        public async Task<IActionResult> GetUserById(long id)
         {
             var model = await _service.GetById(id);
-            var dto = _mapper.Map<RoleModel, RoleDto>(model);
+            var dto = _mapper.Map<UserModel, UserDto>(model);
 
             return StatusCode(200, dto);
         }
 
         [HttpPost]
         [Route("")]
-        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
-        public async Task<IActionResult> Add(AddRoleDto request)
+        public async Task<IActionResult> Add(AddUserDto request)
         {
-            var model = _mapper.Map<AddRoleDto, RoleModel>(request);
+            var model = _mapper.Map<AddUserDto, UserModel>(request);
             await _service.Create(model);
 
             return StatusCode(200);
@@ -60,11 +56,10 @@ namespace Blog.PLL.Controlers
 
         [HttpPut]
         [Route("")]
-        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
-        public async Task<IActionResult> Edit([FromBody] UpdateRoleDto dto)
+        public async Task<IActionResult> Edit([FromBody] UpdateUserDto dto)
         {
 
-            var model = _mapper.Map<UpdateRoleDto, RoleModel>(dto);
+            var model = _mapper.Map<UpdateUserDto, UserModel>(dto);
             await _service.Update(model);
             return StatusCode(200);
 
@@ -73,7 +68,6 @@ namespace Blog.PLL.Controlers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             await _service.Delete(id);
@@ -81,6 +75,5 @@ namespace Blog.PLL.Controlers
             return StatusCode(200);
 
         }
-    
     }
 }

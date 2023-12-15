@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Your ASP.NET Core App</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css"/>
+          
+    <!-- Your additional styles can be added here -->
+    <!-- <link rel="stylesheet" href="~/css/site.css" /> -->
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" href="/">Blog</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/">Статьи</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/about">Коментарии</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/contact">Теги</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/contact">Пользователи</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/contact">Роли</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+        <footer class="bg-dark text-light text-center mt-4 py-3">
+            &copy; 2023 Мой сайт
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+
+
+    <script src="~/js/bootstrap.min.js"></script>
+
+    <!-- Your additional scripts can be added here -->
+    <!-- <script src="~/js/site.js"></script> -->
+
+</body>
+</html>
+

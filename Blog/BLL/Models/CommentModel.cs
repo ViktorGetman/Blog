@@ -1,4 +1,5 @@
 ﻿using Blog.DAL.Entities;
+using Blog.PLL.ViewModel.User;
 
 namespace Blog.BLL.Models
 {
@@ -8,6 +9,7 @@ namespace Blog.BLL.Models
         public string Content { get; set; }
         public long PostId { get; set; }
         public long UserId { get; set; }
+        public UserShortModel User { get; set; }
 
     }
 }

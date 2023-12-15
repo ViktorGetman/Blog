@@ -1,6 +1,4 @@
 ﻿using Blog.BLL.Models;
-using Blog.DAL.Entities;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Blog.BLL.Interfaces
 {
@@ -15,6 +13,8 @@ namespace Blog.BLL.Interfaces
         public Task Update(PostModel model);
 
         public Task Delete(long id);
+        public Task<PostModel> GetById(long id);
+        
     }
 
 }
