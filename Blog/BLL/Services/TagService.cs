@@ -7,7 +7,7 @@ using Blog.BLL.Interfaces;
 
 namespace Blog.BLL.Services
 {
-    public class TagService:ITagService
+    public class TagService : ITagService
     {
         private readonly IDbContextFactory<BlogDbContext> _contextFactory;
         private readonly IMapper _mapper;
@@ -50,6 +50,15 @@ namespace Blog.BLL.Services
             var context = await _contextFactory.CreateDbContextAsync();
             context.Remove(new TagEntity() { Id = id });
             await context.SaveChangesAsync();
+        }
+
+        public async Task<ICollection<TagStatisticModel>> GetTagStatistic()
+        {
+            var context = await _contextFactory.CreateDbContextAsync();
+            var models = await context.Tags.GroupBy(x => x.Content)
+                .Select(x => new TagStatisticModel() { Content = x.Key, PostCount = x.Count() })
+                .ToListAsync();
+            return models;
         }
     }
 }

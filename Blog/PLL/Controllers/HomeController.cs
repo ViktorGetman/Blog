@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.PLL.Controllers
 {
-    /// <summary>
-    /// [Route("[controller]")]
-    /// </summary>
+   
+     
     public class HomeController : Controller
     {
         private readonly IPostService _postService;

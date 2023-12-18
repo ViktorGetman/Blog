@@ -68,6 +68,15 @@ namespace Blog.BLL.Services
                 .FirstOrDefaultAsync(x => x.Id == id);
             return _mapper.Map<PostModel>(entity);
         }
+
+        public async Task<ICollection<PostModel>> GetPostsByTag(string tag)
+        {
+            var context = await _contextFactory.CreateDbContextAsync();
+            var entities = await context.Posts.Include(x => x.User)
+                .Include(x => x.Comments).Include(x => x.Tags)
+                .Where(x=> x.Tags.Any(y=>y.Content==tag)).ToListAsync();
+            return entities.Select(x => _mapper.Map<PostModel>(x)).ToList();
+        }
     }
 }
 

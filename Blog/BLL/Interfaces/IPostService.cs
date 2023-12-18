@@ -14,7 +14,7 @@ namespace Blog.BLL.Interfaces
 
         public Task Delete(long id);
         public Task<PostModel> GetById(long id);
-        
+        public Task<ICollection<PostModel>> GetPostsByTag(string tag);
     }
 
 }

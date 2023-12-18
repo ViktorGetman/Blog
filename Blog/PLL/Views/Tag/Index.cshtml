@@ -1,0 +1,23 @@
+﻿@model Blog.PLL.ViewModel.Tag.TagCollctionViewModel
+
+@{
+    ViewData["Title"] = "Список тегов";
+}
+
+<div class="container mt-4">
+    <h1>Список тегов</h1>
+
+    @foreach (var tag in Model.Tags)
+    {
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="@Url.Action(null, "PostByTag", new { tag = tag.Content })">#@tag.Content</a>
+                </h5>
+                <p class="text-muted">
+                    <strong>Количество постов:</strong> @tag.PostCount
+                </p>
+            </div>
+        </div>
+    }
+</div>

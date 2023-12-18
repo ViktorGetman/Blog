@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Blog.PLL.Controllers;
 
-/// <summary>
-/// [Route("[controller]")]
-/// </summary>
+
+[Route("[controller]")]
+
 public class PostDetailController : Controller
 {
     private readonly IPostService _postService;

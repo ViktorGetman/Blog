@@ -1,7 +1,7 @@
-﻿@model Blog.PLL.ViewModel.Post.PostCollectionViewModel
+﻿@model Blog.PLL.ViewModel.Post.PostsByTagViewModel
 
 <div class="container mt-4">
-    <h1>Список постов</h1>
+    <h1>Список постов по тегу @Model.TagName</h1>
 
     @foreach (var post in Model.Posts)
     {

@@ -10,6 +10,7 @@ namespace Blog.PLL.ViewModel.Post
         public string PostContent { get; set; }
         public long UserId { get; set; }
         public string UserFullName { get; set; }
+        public string UserEmail { get; set; }
         public int CommentsCount { get; set; }
         public string[] Tags { get; set; }
     }

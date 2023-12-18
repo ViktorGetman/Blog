@@ -15,6 +15,7 @@ namespace Blog.BLL.Interfaces
         public Task Update(TagModel model);
 
         public Task Delete(long id);
+        public Task <ICollection<TagStatisticModel>> GetTagStatistic();
 
     }
 }
