@@ -5,6 +5,7 @@ using Blog.DAL;
 using Microsoft.EntityFrameworkCore;
 using Blog.BLL.Interfaces;
 using System.Data;
+using Blog.Common.Enums;
 
 namespace Blog.BLL.Services
 {
@@ -22,32 +23,34 @@ namespace Blog.BLL.Services
         {
             var context = await _contextFactory.CreateDbContextAsync();
             var entity = await context.Users.Include(x => x.Roles).ThenInclude(x => x.Role)
+                .Include(x => x.Posts).ThenInclude(x => x.Tags).Include(x => x.Comments)
                 .FirstOrDefaultAsync(x => x.Id == id);
             return _mapper.Map<UserModel>(entity);
         }
         public async Task<ICollection<UserModel>> Get()
         {
             var context = await _contextFactory.CreateDbContextAsync();
-            var entities = await context.Users.Include(x => x.Roles).ThenInclude(x=> x.Role).ToListAsync();
+            var entities = await context.Users.Include(x => x.Roles).ThenInclude(x=> x.Role)
+                .Include(x => x.Posts).Include(x => x.Comments).ToListAsync();
             return entities.Select(x => _mapper.Map<UserModel>(x)).ToList();
         }
-        public async Task Create(UserModel model)
+        public async Task Create(CreateUserModel model)
         {
             var context = await _contextFactory.CreateDbContextAsync();
             var entity = _mapper.Map<UserEntity>(model);
-            if (model.RoleIds?.Any() ?? false)
+            var role = await context.Roles.FirstOrDefaultAsync(x=> x.RoleType==RoleType.User);
+            if (role == null) 
             {
-                entity.Roles = new List<UserRoleEntity>();
-                foreach (var roleId in model.RoleIds)
-                {
-                    var userRole = new UserRoleEntity()
-                    {
-                        RoleId = roleId,
-                        User = entity
-                    };
-                    entity.Roles.Add(userRole);
-                }
+                throw new InvalidOperationException("В бд не найдена роль \"Пользователь\"");
             }
+            entity.Roles = new List<UserRoleEntity>();
+            var userRole = new UserRoleEntity()
+            {
+                RoleId = role.Id,
+                User = entity
+            };
+            entity.Roles.Add(userRole);
+
             await context.Users.AddAsync(entity);
             await context.SaveChangesAsync();
 
@@ -62,22 +65,22 @@ namespace Blog.BLL.Services
             entity.Age = model.Age;
             entity.Photo = model.Photo;
 
-            if (model.RoleIds != null)
+            if (model.Roles != null)
             {
                 foreach (var role in entity.Roles)
                 {
-                    if (!model.RoleIds.Any(x => x == role.RoleId))
+                    if (!model.Roles.Any(x => x.Id == role.RoleId))
                     {
                         context.UserRoles.Remove(role);
                     }
                 }
-                foreach (var roleId in model.RoleIds)
+                foreach (var role in model.Roles)
                 {
-                    if (!entity.Roles.Any(x => x.RoleId == roleId))
+                    if (!entity.Roles.Any(x => x.RoleId == role.Id))
                     {
                         var userRole = new UserRoleEntity()
                         {
-                            RoleId = roleId,
+                            RoleId = role.Id,
                             User = entity
                         };
                         entity.Roles.Add(userRole);

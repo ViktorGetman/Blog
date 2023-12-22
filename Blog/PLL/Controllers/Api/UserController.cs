@@ -47,7 +47,7 @@ namespace Blog.PLL.Controlers.Api
         [Route("")]
         public async Task<IActionResult> Add(AddUserDto request)
         {
-            var model = _mapper.Map<AddUserDto, UserModel>(request);
+            var model = _mapper.Map<AddUserDto, CreateUserModel>(request);
             await _service.Create(model);
 
             return StatusCode(200);

@@ -10,7 +10,7 @@ namespace Blog.BLL.Interfaces
 
         public Task<ICollection<UserModel>> Get();
 
-        public Task Create(UserModel model);
+        public Task Create(CreateUserModel model);
 
         public Task Update(UserModel model);
 

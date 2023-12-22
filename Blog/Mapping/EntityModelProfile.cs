@@ -10,14 +10,18 @@ namespace Blog.Mapping
         {
             CreateMap<CommentEntity, CommentModel>().ReverseMap();
             CreateMap<UserEntity, UserModel>()
-                .ForMember(dest => dest.RoleIds, opt => opt.MapFrom(src => src.Roles.Select(x=>x.RoleId).ToList()))
-                .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.Roles.Select(x => x.Role.RoleType).ToList()))
-                .ReverseMap()
-                .ForMember(dest => dest.Roles, opt => opt.Ignore());
+                .ReverseMap();
             CreateMap<PostEntity, PostModel>().ReverseMap();
             CreateMap<TagEntity, TagModel>().ReverseMap();
-            CreateMap<RoleEntity, RoleModel>().ReverseMap();
+            CreateMap<RoleEntity, RoleModel>()
+                .ForMember(dest => dest.UserCount, opt => opt.MapFrom(src => src.Users.Count))
+                .ReverseMap();
             CreateMap<UserEntity, UserShortModel>().ReverseMap();
+            CreateMap<UserRoleEntity, RoleShortModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Role.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Role.Name))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Role.Description))
+                .ForMember(dest => dest.RoleType, opt => opt.MapFrom(src => src.Role.RoleType));
         }
     }
 }

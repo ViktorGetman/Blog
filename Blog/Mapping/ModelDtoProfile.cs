@@ -18,7 +18,6 @@ namespace Blog.Mapping
             CreateMap<TagModel, TagDto>().ReverseMap();
             CreateMap<AddCommentDto, CommentModel>();
             CreateMap<UpdateCommentDto, CommentModel>();
-            CreateMap<AddUserDto, UserModel>();
             CreateMap<UpdateUserDto, UserModel>();
             CreateMap<AddPostDto, PostModel>();
             CreateMap<UpdatePostDto, PostModel>();
@@ -27,6 +26,7 @@ namespace Blog.Mapping
             CreateMap<RoleModel, RoleDto>().ReverseMap();
             CreateMap<AddRoleDto, RoleModel>();
             CreateMap<UpdateRoleDto, RoleModel>();
+            CreateMap<AddUserDto, CreateUserModel>();
         }
     }
 }

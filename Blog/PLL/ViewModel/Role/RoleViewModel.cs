@@ -1,6 +1,6 @@
 ﻿using Blog.Common.Enums;
 
-namespace Blog.PLL.ViewModel
+namespace Blog.PLL.ViewModel.Role
 {
     public class RoleViewModel
     {
@@ -8,5 +8,6 @@ namespace Blog.PLL.ViewModel
         public string Name { get; set; }
         public string Description { get; set; }
         public RoleType RoleType { get; set; }
+        public int UserCount { get; set; }
     }
 }

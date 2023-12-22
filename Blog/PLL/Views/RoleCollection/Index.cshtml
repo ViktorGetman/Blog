@@ -1,0 +1,34 @@
+﻿@model Blog.PLL.ViewModel.Role.RoleCollectionViewModel
+
+<div class="container mt-4">
+    <h1>Список ролей</h1>
+    <div>
+        <!-- Добавляем кнопку "Перейти к посту" -->
+        <a href="@Url.Action("Create", "Role")" class="btn btn-primary">Добавить</a>
+    </div>
+    @foreach (var role in Model.Roles)
+    {
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">@role.Name</h5>
+                <p class="text-muted">
+                    <strong>Описание:</strong> @role.Description
+                </p>
+                <p class="text-muted">
+                    <strong>Тип роли:</strong> @role.RoleType
+                </p>
+                <p class="text-muted">
+                    <strong>Количество пользователей:</strong> @role.UserCount
+                </p>
+                <div class="d-flex justify-content-between">
+                    <div> 
+                        <a href="@Url.Action("Edit", "Role", new { id = role.Id })" class="btn btn-primary">Редактировать</a>
+                    </div>
+                    <div>
+                        <a href="@Url.Action("Delete", "Role", new { id = role.Id })" class="btn btn-primary">Удалить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

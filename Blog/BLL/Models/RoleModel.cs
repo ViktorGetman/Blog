@@ -9,6 +9,7 @@ namespace Blog.BLL.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public RoleType RoleType { get; set; }
+        public int UserCount { get; set; }
 
     }
 }

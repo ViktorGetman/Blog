@@ -1,0 +1,45 @@
+﻿@model Blog.PLL.DTO.User.AddUserDto
+
+@{
+    ViewData["Title"] = "Регистрация пользователя";
+}
+
+<div class="container mt-4">
+    <h1>Регистрация пользователя</h1>
+
+    <form method="post" action="@Url.Action(null, "Api/User")">
+        @* Защита от подделки межсайтовых запросов *@
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label for="FirstName">Имя</label>
+            <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="LastName">Фамилия</label>
+            <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Age">Возраст</label>
+            <input type="number" class="form-control" id="Age" name="Age" value="@Model.Age" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Password">Пароль</label>
+            <input type="password" class="form-control" id="Password" name="Password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Photo">Фото</label>
+            <input type="text" class="form-control" id="Photo" name="Photo" value="@Model.Photo">
+        </div>
+        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+    </form>
+</div>

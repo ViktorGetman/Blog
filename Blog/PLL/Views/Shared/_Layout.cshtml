@@ -14,6 +14,8 @@
 
     <div class="container">
         <header>
+            <div class="d-flex justify-content-between">
+            <div>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container">
                     <a class="navbar-brand" href="/">Blog</a>
@@ -32,15 +34,21 @@
                                 <a class="nav-link text-dark" href="/tag">Теги</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/contact">Пользователи</a>
+                                <a class="nav-link text-dark" href="/userCollection">Пользователи</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/contact">Роли</a>
+                                <a class="nav-link text-dark" href="/RoleCollection">Роли</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </nav>
+              </nav>
+            </div>
+                <div>
+                    <a class="navbar-brand" href="/User/Registration">Регистрация</a>
+
+                </div>
+            </div>
         </header>
         <main role="main" class="pb-3">
             @RenderBody()

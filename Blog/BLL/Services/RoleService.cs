@@ -26,7 +26,7 @@ namespace Blog.BLL.Services
         public async Task<ICollection<RoleModel>> Get()
         {
             var context = await _contextFactory.CreateDbContextAsync();
-            var entities = await context.Roles.ToListAsync();
+            var entities = await context.Roles.Include(x=> x.Users).ToListAsync();
             return entities.Select(x => _mapper.Map<RoleModel>(x)).ToList();
         }
         public async Task Create(RoleModel model)
