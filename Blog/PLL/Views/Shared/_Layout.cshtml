@@ -5,48 +5,60 @@
     <title>Your ASP.NET Core App</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="~/css/bootstrap.min.css"/>
-          
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+
     <!-- Your additional styles can be added here -->
     <!-- <link rel="stylesheet" href="~/css/site.css" /> -->
 </head>
 <body>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <div class="container">
         <header>
             <div class="d-flex justify-content-between">
-            <div>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" href="/">Blog</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/">Статьи</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/about">Коментарии</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/tag">Теги</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/userCollection">Пользователи</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/RoleCollection">Роли</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-              </nav>
-            </div>
                 <div>
-                    <a class="navbar-brand" href="/User/Registration">Регистрация</a>
+                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                        <div class="container">
+                            <a class="navbar-brand" href="/">Blog</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="/">Статьи</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="/comment">Коментарии</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="/tag">Теги</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="/userCollection">Пользователи</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="/RoleCollection">Роли</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                <div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="navbar-brand" id="logoutButton" href="#">Выход</a>
 
+                        <a class="navbar-brand" href="/User/@User.FindFirst("Id")?.Value">@User.Identity.Name</a>
+
+                    }
+                    else
+                    {
+                        <a class="navbar-brand" href="/User/Authorization">Авторизация</a>
+
+                        <a class="navbar-brand" href="/User/Registration">Регистрация</a>
+
+                    }
                 </div>
             </div>
         </header>
@@ -62,7 +74,21 @@
 
 
     <script src="~/js/bootstrap.min.js"></script>
-
+    <script>
+        $('#logoutButton').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '/api/logout', // Укажите правильный URL для вашего API
+                success: function () {
+                    // Перенаправление на страницу авторизации после успешного выхода
+                    window.location.href = '/user/authorization'; // Укажите правильный URL для страницы авторизации
+                },
+                error: function (error) {
+                    console.error('Ошибка выхода', error);
+                }
+            });
+        });
+    </script>
     <!-- Your additional scripts can be added here -->
     <!-- <script src="~/js/site.js"></script> -->
 

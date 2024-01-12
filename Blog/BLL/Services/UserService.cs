@@ -38,6 +38,7 @@ namespace Blog.BLL.Services
         {
             var context = await _contextFactory.CreateDbContextAsync();
             var entity = _mapper.Map<UserEntity>(model);
+            entity.Photo = "";
             var role = await context.Roles.FirstOrDefaultAsync(x=> x.RoleType==RoleType.User);
             if (role == null) 
             {
@@ -57,38 +58,45 @@ namespace Blog.BLL.Services
         }
         public async Task Update(UserModel model)
         {
-            var context = await _contextFactory.CreateDbContextAsync();
-            var entity = await context.Users.Include(x => x.Roles)
-                .FirstOrDefaultAsync(x => x.Id == model.Id);
-            entity.FirstName = model.FirstName;
-            entity.LastName = model.LastName;
-            entity.Age = model.Age;
-            entity.Photo = model.Photo;
-
-            if (model.Roles != null)
+            try
             {
-                foreach (var role in entity.Roles)
+                var context = await _contextFactory.CreateDbContextAsync();
+                var entity = await context.Users.Include(x => x.Roles)
+                    .FirstOrDefaultAsync(x => x.Id == model.Id);
+                entity.FirstName = model.FirstName;
+                entity.LastName = model.LastName;
+                entity.Age = model.Age;
+                entity.Photo = model.Photo;
+
+                if (model.Roles != null)
                 {
-                    if (!model.Roles.Any(x => x.Id == role.RoleId))
+                    foreach (var role in entity.Roles)
                     {
-                        context.UserRoles.Remove(role);
-                    }
-                }
-                foreach (var role in model.Roles)
-                {
-                    if (!entity.Roles.Any(x => x.RoleId == role.Id))
-                    {
-                        var userRole = new UserRoleEntity()
+                        if (!model.Roles.Any(x => x.Id == role.RoleId))
                         {
-                            RoleId = role.Id,
-                            User = entity
-                        };
-                        entity.Roles.Add(userRole);
+                            context.UserRoles.Remove(role);
+                        }
                     }
-                }
+                    foreach (var role in model.Roles)
+                    {
+                        if (!entity.Roles.Any(x => x.RoleId == role.Id))
+                        {
+                            var userRole = new UserRoleEntity()
+                            {
+                                RoleId = role.Id,
+                                User = entity
+                            };
+                            entity.Roles.Add(userRole);
+                        }
+                    }
                 }
                 context.Users.Update(entity);
                 await context.SaveChangesAsync();
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
             }
             public async Task Delete(long id)
             {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Blog.BLL.Models;
-using Blog.PLL.ViewModel;
+using Blog.PLL.ViewModel.Comment;
 using Blog.PLL.ViewModel.Post;
 using Blog.PLL.ViewModel.Role;
 using Blog.PLL.ViewModel.Tag;

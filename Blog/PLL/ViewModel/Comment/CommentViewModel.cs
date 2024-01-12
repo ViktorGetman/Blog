@@ -1,6 +1,6 @@
 ﻿using Blog.PLL.ViewModel.User;
 
-namespace Blog.PLL.ViewModel
+namespace Blog.PLL.ViewModel.Comment
 {
     public class CommentViewModel
     {

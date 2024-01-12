@@ -44,7 +44,7 @@ namespace Blog.PLL.Controlers.Api
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("create")]
         public async Task<IActionResult> Add(AddUserDto request)
         {
             var model = _mapper.Map<AddUserDto, CreateUserModel>(request);
@@ -55,7 +55,7 @@ namespace Blog.PLL.Controlers.Api
 
 
         [HttpPut]
-        [Route("")]
+        [Route("edit")]
         public async Task<IActionResult> Edit([FromBody] UpdateUserDto dto)
         {
 

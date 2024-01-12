@@ -22,6 +22,7 @@ namespace Blog.Mapping
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Role.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Role.Description))
                 .ForMember(dest => dest.RoleType, opt => opt.MapFrom(src => src.Role.RoleType));
+            CreateMap<CreateUserModel, UserEntity>();
         }
     }
 }

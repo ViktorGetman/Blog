@@ -12,6 +12,7 @@ namespace Blog.DAL.Configurations
             builder.ToTable("Users");
 
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Photo).IsRequired(false);
         }
 
     }

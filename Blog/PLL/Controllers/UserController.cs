@@ -31,6 +31,16 @@ namespace Blog.PLL.Controllers
         {
             return View();
         }
+        [Route("authorization")]
+        public async Task<IActionResult> Authorization()
+        {
+            return View();
+        }
+        [Route("edit")]
+        public async Task<IActionResult> Edit()
+        {
+            return View();
+        }
 
     }
 }

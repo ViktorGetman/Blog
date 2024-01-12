@@ -39,7 +39,9 @@ namespace Blog.PLL.Controlers.Api
             var roleClaims = models.Roles.Select(x => new Claim(ClaimTypes.Role, x.ToString()));
             var claims = new List<Claim>
             {
-             new Claim(ClaimsIdentity.DefaultNameClaimType, models.Email),
+              new Claim(ClaimsIdentity.DefaultNameClaimType, models.Email),
+              new Claim(ClaimTypes.Name, $"{models.FirstName} {models.LastName}"),
+              new Claim("Id", models.Id.ToString()),
             };
             claims.AddRange(roleClaims);
             var claimsIdentity = new ClaimsIdentity(claims, "Cookies");

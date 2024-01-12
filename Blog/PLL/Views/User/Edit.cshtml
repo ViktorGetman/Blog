@@ -1,0 +1,59 @@
+﻿<script>
+    $(document).ready(function () {
+        $('#UserEditForm').submit(function (event) {
+            event.preventDefault();
+
+            var formData = {
+                Id: $('#Id').val(),
+                FirstName: $('#FirstName').val(),
+                LastName: $('#LastName').val(),
+                Age: $('#Age').val(),
+
+            };
+
+            $.ajax({
+                type: 'PUT',
+                CORS: true,
+                url: '/api/user/edit',  // Укажите правильный URL для вашего API
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (data) {
+                    console.log('Успех', data);
+                },
+                error: function (error) {
+                    console.error('Ошибка', error);
+                }
+            });
+        });
+    });
+</script>
+@{
+    ViewData["Title"] = "Редактирование пользователя";
+}
+<div class="container mt-4">
+    <h1>Редактирование пользователя</h1>
+
+    <form id="UserEditForm">
+        @* Защита от подделки межсайтовых запросов *@
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" id="Id" name="Id" value="@User.FindFirst("Id").Value">
+
+        <div class="form-group">
+            <label for="FirstName">Имя</label>
+            <input type="text" class="form-control" id="FirstName" name="FirstName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="LastName">Фамилия</label>
+            <input type="text" class="form-control" id="LastName" name="LastName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Age">Возраст</label>
+            <input type="number" class="form-control" id="Age" name="Age" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>

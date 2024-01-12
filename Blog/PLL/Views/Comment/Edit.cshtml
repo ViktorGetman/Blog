@@ -1,0 +1,48 @@
+﻿@model Blog.PLL.ViewModel.Comment.CommentViewModel
+@{
+    ViewData["Title"] = "Редактирование коментария";
+}
+<script>
+    $(document).ready(function () {
+        $('#CommentEditForm').submit(function (event) {
+            event.preventDefault();
+
+            var formData = {
+                Id: $('#Id').val(),
+                Content: $('#Content').val(),
+               };
+
+            $.ajax({
+                type: 'PUT',
+                CORS: true,
+                url: '/api/comment',  // Укажите правильный URL для вашего API
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (data) {
+                    console.log('Успех', data);
+                },
+                error: function (error) {
+                    console.error('Ошибка', error);
+                }
+            });
+        });
+    });
+</script>
+
+<div class="container mt-4">
+    <h1>Редактирование коментария</h1>
+
+    <form id="CommentEditForm">
+        @* Защита от подделки межсайтовых запросов *@
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" id="Id" name="Id" value="@Model.Id">
+
+        <div class="form-group">
+            <label for="Content">Содержимое комментария</label>
+            <input value="@Model.Content" type="text" class="form-control" id="Content" name="Content" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>

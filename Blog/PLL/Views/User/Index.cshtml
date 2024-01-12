@@ -8,6 +8,14 @@
     <h1>@Model.FullName</h1>
 
     <div class="card mt-3">
+        <div class ="d-flex">
+            @if (User.Identity.IsAuthenticated && User.FindFirst("id").Value == Model.Id.ToString())
+            {
+                <div>
+                    <a href="/user/edit" class="btn btn-primary">Редактировать</a>
+                </div>
+            }
+        </div>
         <div class="card-body">
             <p>
                 <strong>Email:</strong> @Model.Email
