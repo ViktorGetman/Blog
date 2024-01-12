@@ -37,6 +37,13 @@ namespace Blog.PLL.Controllers
             var commentViewModel = _mapper.Map<CommentModel, CommentViewModel>(commentModel);
             return View(commentViewModel);
         }
+        [Route("add/{postId}")]
+        public IActionResult Add(long postId)
+        {
+            var userId = long.Parse(User.FindFirst("Id").Value);
+            var viewModel = new AddCommentViewModel() { PostId = postId, UserId = userId }; 
+            return View(viewModel);
+        }
     }
 }
 

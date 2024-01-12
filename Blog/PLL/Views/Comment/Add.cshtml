@@ -1,25 +1,26 @@
-﻿@model Blog.PLL.ViewModel.Comment.CommentViewModel
+﻿@model Blog.PLL.ViewModel.Comment.AddCommentViewModel
 @{
-    ViewData["Title"] = "Редактирование коментария";
+    ViewData["Title"] = "Добавление коментария";
 }
 <script>
     $(document).ready(function () {
-        $('#CommentEditForm').submit(function (event) {
+        $('#CommentAddForm').submit(function (event) {
             event.preventDefault();
 
             var formData = {
-                Id: $('#Id').val(),
+                PostId: $('#PostId').val(),
+                UserId: $('#UserId').val(),
                 Content: $('#Content').val(),
-               };
+            };
 
             $.ajax({
-                type: 'PUT',
+                type: 'POST',
                 CORS: true,
                 url: '/api/comment',  // Укажите правильный URL для вашего API
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 success: function (data) {
-                    window.location.href = '/postDetail/'.concat($('#PostId').val());
+                    window.location.href = '/postDetail/'.concat(formData.PostId);
                 },
                 error: function (error) {
                     console.error('Ошибка', error);
@@ -30,18 +31,18 @@
 </script>
 
 <div class="container mt-4">
-    <h1>Редактирование коментария</h1>
+    <h1>Добавление коментария</h1>
 
-    <form id="CommentEditForm">
+    <form id="CommentAddForm">
         @* Защита от подделки межсайтовых запросов *@
         @Html.AntiForgeryToken()
 
-        <input type="hidden" id="Id" name="Id" value="@Model.Id">
         <input type="hidden" id="PostId" name="PostId" value="@Model.PostId">
+        <input type="hidden" id="UserId" name="UserId" value="@Model.UserId">
 
         <div class="form-group">
             <label for="Content">Содержимое комментария</label>
-            <input value="@Model.Content" type="text" class="form-control" id="Content" name="Content" required>
+            <input type="text" class="form-control" id="Content" name="Content" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Сохранить</button>

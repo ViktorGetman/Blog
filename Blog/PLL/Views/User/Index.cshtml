@@ -6,17 +6,17 @@
 
 <div class="container mt-4">
     <h1>@Model.FullName</h1>
-
-    <div class="card mt-3">
-        <div class ="d-flex">
-            @if (User.Identity.IsAuthenticated && User.FindFirst("id").Value == Model.Id.ToString())
-            {
-                <div>
-                    <a href="/user/edit" class="btn btn-primary">Редактировать</a>
-                </div>
-            }
+    
+    @if (User.Identity.IsAuthenticated && User.FindFirst("Id").Value == Model.Id.ToString())
+    {
+        <div class="d-flex justify-content-end">
+             <a class="btn btn-sm btn-outline-primary mr-2" href="/user/edit">Редактировать</a>     
+            <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete(@Model.Id)">Удалить</button>
         </div>
-        <div class="card-body">
+    }
+  
+    <div class="card mt-3">
+       <div class="card-body">
             <p>
                 <strong>Email:</strong> @Model.Email
             </p>
@@ -62,3 +62,24 @@
     }
 
 </div>
+
+<script>
+    function confirmDelete(userId) {
+        var result = confirm("Вы уверены, что хотите удалить пользователя?");
+
+        if (result) {
+            // Пользователь нажал "Да", отправляем запрос к API и обновляем страницу
+            $.ajax({
+                type: 'DELETE',
+                CORS: true,
+                url: '/api/user/'.concat(userId),  // Укажите правильный URL для вашего API
+                success: function (data) {
+                    window.location.href = '/User/Authorization/';
+                },
+                error: function (error) {
+                    console.error('Ошибка', error);
+                }
+            });
+        }
+    }
+</script>

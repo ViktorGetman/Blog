@@ -2,6 +2,8 @@
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
 using Blog.PLL.DTO.User;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.PLL.Controlers.Api
@@ -71,6 +73,10 @@ namespace Blog.PLL.Controlers.Api
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             await _service.Delete(id);
+            if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.FindFirst("Id").Value == id.ToString())
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            }
 
             return StatusCode(200);
 

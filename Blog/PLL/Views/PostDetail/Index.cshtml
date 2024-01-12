@@ -14,8 +14,12 @@
             <p class="card-text">@Model.PostContent</p>
         </div>
     </div>
-
-    <h2 class="mt-4">Комментарии</h2>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mt-4">Комментарии</h2>
+        <div>
+            <a class="btn btn-sm btn-outline-primary mr-2" href="/comment/add/@Model.Id">Добавить комментарий</a>
+        </div>
+    </div>
 
     @foreach (var comment in Model.Comments)
     {
@@ -29,7 +33,7 @@
             @if (User.Identity.IsAuthenticated && User.FindFirst("Id").Value == comment.User.Id.ToString())
             {
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-sm btn-outline-primary mr-2" onclick="editComment(@comment.Id)">Редактировать</button>
+                    <a class="btn btn-sm btn-outline-primary mr-2" href="/Comment/Edit/@comment.Id">Редактировать</a>
                     <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete(@comment.Id)">Удалить</button>
                 </div>
             }
