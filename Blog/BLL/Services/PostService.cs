@@ -38,6 +38,7 @@ namespace Blog.BLL.Services
         {
             var context = await _contextFactory.CreateDbContextAsync();
             var entity = _mapper.Map<PostEntity>(model);
+            entity.Tags = model.Tags.Select(x=> new TagEntity() {Content= x.Content, Post=entity}).ToList();
             await context.Posts.AddAsync(entity);
             await context.SaveChangesAsync();
 

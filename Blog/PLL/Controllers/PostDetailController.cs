@@ -29,4 +29,9 @@ public class PostDetailController : Controller
         var postViewModel = _mapper.Map<PostModel, PostViewModel>(postModel);
         return View(postViewModel);
     }
+    [Route("Add")]
+    public IActionResult Add()
+    {
+        return View();
+    }
 }

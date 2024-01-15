@@ -1,0 +1,23 @@
+﻿@model Blog.PLL.ViewModel.Post.PostShortViewModel
+
+<div class="card mt-3">
+    <div class="card-body">
+        <h5 class="card-title">@Model.PostName</h5>
+        <p class="card-text">@Model.PostContent</p>
+        <p class="text-muted">
+            <strong>Автор:</strong> @Model.UserFullName - <span class="small">@Model.UserEmail</span>
+        </p>
+        <div class="d-flex justify-content-between">
+            <div>
+                <strong>Количество комментариев:</strong> @Model.CommentsCount
+            </div>
+            <div>
+                <!-- Добавляем кнопку "Перейти к посту" -->
+                <a href="@Url.Action(null, "PostDetail", new { id = Model.Id })" class="btn btn-primary">Перейти к посту</a>
+            </div>
+        </div>
+        <div>
+            <strong>Теги:</strong> @string.Join(", ", Model.Tags)
+        </div>
+    </div>
+</div>

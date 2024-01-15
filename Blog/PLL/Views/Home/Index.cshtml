@@ -3,6 +3,11 @@
 <div class="container mt-4">
     <h1>Список постов</h1>
 
+    <div>
+        <!-- Добавляем кнопку "Перейти к посту" -->
+        <a href="@Url.Action("Add", "PostDetail")" class="btn btn-primary">Создать пост</a>
+    </div>
+
     @foreach (var post in Model.Posts)
     {
         <div class="card mt-3">

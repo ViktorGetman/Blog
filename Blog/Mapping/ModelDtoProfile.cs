@@ -19,7 +19,7 @@ namespace Blog.Mapping
             CreateMap<AddCommentDto, CommentModel>();
             CreateMap<UpdateCommentDto, CommentModel>();
             CreateMap<UpdateUserDto, UserModel>();
-            CreateMap<AddPostDto, PostModel>();
+            CreateMap<AddPostDto, PostModel>().ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags.Select(x=> new TagModel() {Content=x})));
             CreateMap<UpdatePostDto, PostModel>();
             CreateMap<AddTagDto, TagModel>();
             CreateMap<UpdateTagDto, TagModel>();
@@ -27,6 +27,7 @@ namespace Blog.Mapping
             CreateMap<AddRoleDto, RoleModel>();
             CreateMap<UpdateRoleDto, RoleModel>();
             CreateMap<AddUserDto, CreateUserModel>();
+
         }
     }
 }
