@@ -34,4 +34,12 @@ public class PostDetailController : Controller
     {
         return View();
     }
+    [Route("Edit/{id}")]
+    public async Task<IActionResult> Edit(long id)
+    {
+
+        var postModel = await _postService.GetById(id);
+        var postViewModel = _mapper.Map<PostModel, PostShortViewModel>(postModel);
+        return View(postViewModel);
+    }
 }

@@ -13,7 +13,15 @@
             </div>
             <div>
                 <!-- Добавляем кнопку "Перейти к посту" -->
-                <a href="@Url.Action(null, "PostDetail", new { id = Model.Id })" class="btn btn-primary">Перейти к посту</a>
+                <a href="@Url.Action(null, "PostDetail", new { id = Model.Id })" class="btn btn-primary mr-2 btn-sm">Перейти к посту</a>
+
+                @if (User.Identity.IsAuthenticated && User.FindFirst("Id").Value == Model.UserId.ToString())
+                {
+
+                    <a class="btn btn-sm btn-outline-primary mr-2" href="/PostDetail/Edit/@Model.Id">Редактировать</a>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deletePost(@Model.Id)">Удалить</button>
+
+                }
             </div>
         </div>
         <div>
@@ -21,3 +29,5 @@
         </div>
     </div>
 </div>
+
+

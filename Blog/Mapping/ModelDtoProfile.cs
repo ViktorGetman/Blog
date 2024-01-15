@@ -20,7 +20,7 @@ namespace Blog.Mapping
             CreateMap<UpdateCommentDto, CommentModel>();
             CreateMap<UpdateUserDto, UserModel>();
             CreateMap<AddPostDto, PostModel>().ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags.Select(x=> new TagModel() {Content=x})));
-            CreateMap<UpdatePostDto, PostModel>();
+            CreateMap<UpdatePostDto, PostModel>().ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags.Select(x => new TagModel() { Content = x, PostId= src.Id }))); 
             CreateMap<AddTagDto, TagModel>();
             CreateMap<UpdateTagDto, TagModel>();
             CreateMap<RoleModel, RoleDto>().ReverseMap();

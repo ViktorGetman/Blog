@@ -34,36 +34,10 @@
             {
                 <div class="d-flex justify-content-end">
                     <a class="btn btn-sm btn-outline-primary mr-2" href="/Comment/Edit/@comment.Id">Редактировать</a>
-                    <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete(@comment.Id)">Удалить</button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteComment(@comment.Id)">Удалить</button>
                 </div>
             }
 
         </div>
     }
 </div>
-
-<script>
-    function confirmDelete(commentId) {
-        var result = confirm("Вы уверены, что хотите удалить этот комментарий?");
-
-        if (result) {
-            // Пользователь нажал "Да", отправляем запрос к API и обновляем страницу
-            $.ajax({
-                type: 'DELETE',
-                CORS: true,
-                url: '/api/comment/'.concat(commentId),  // Укажите правильный URL для вашего API
-                success: function (data) {
-                    window.location.reload();
-                },
-                error: function (error) {
-                    console.error('Ошибка', error);
-                }
-            });
-        }
-    }
-
-    function editComment(commentId) {
-        window.location.href = '/Comment/Edit/'.concat(commentId);
-    }
-
-</script>

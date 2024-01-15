@@ -46,9 +46,33 @@ namespace Blog.BLL.Services
         public async Task Update(PostModel model)
         {
             var context = await _contextFactory.CreateDbContextAsync();
-            var entity = await context.Posts.FirstOrDefaultAsync(x => x.Id == model.Id);
+            var entity = await context.Posts.Include(x=>x.Tags).FirstOrDefaultAsync(x => x.Id == model.Id);
             entity.PostName = model.PostName;
             entity.PostContent = model.PostContent;
+            if (model.Tags != null)
+            {
+                foreach (var tag in entity.Tags)
+                {
+                    if (!model.Tags.Any(x => x.Content == tag.Content))
+                    {
+                        context.Tags.Remove(tag);
+                    }
+                }
+                foreach (var tag in model.Tags)
+                {
+                    if (!entity.Tags.Any(x => x.Content == tag.Content))
+                    {
+                        var newTag = new TagEntity()
+                        {
+                            Content = tag.Content,
+                            PostId = tag.PostId,
+                            Post= entity
+
+                        };
+                        entity.Tags.Add(newTag);
+                    }
+                }
+            }
             context.Posts.Update(entity);
             await context.SaveChangesAsync();
         }

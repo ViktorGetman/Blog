@@ -11,9 +11,13 @@
     <!-- <link rel="stylesheet" href="~/css/site.css" /> -->
 </head>
 <body>
+    <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   
+    <script src="~/js/bootstrap.min.js"></script>
+
     <div class="container">
         <header>
             <div class="d-flex justify-content-between">
@@ -72,27 +76,7 @@
         </footer>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-
-
-    <script src="~/js/bootstrap.min.js"></script>
-    <script>
-        $('#logoutButton').click(function () {
-            $.ajax({
-                type: 'POST',
-                url: '/api/logout', // Укажите правильный URL для вашего API
-                success: function () {
-                    // Перенаправление на страницу авторизации после успешного выхода
-                    window.location.href = '/user/authorization'; // Укажите правильный URL для страницы авторизации
-                },
-                error: function (error) {
-                    console.error('Ошибка выхода', error);
-                }
-            });
-        });
-    </script>
-    <!-- Your additional scripts can be added here -->
-    <!-- <script src="~/js/site.js"></script> -->
+    <script src="~/js/blog.js"></script>
 
 </body>
 </html>
