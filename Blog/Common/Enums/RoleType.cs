@@ -1,9 +1,14 @@
-﻿namespace Blog.Common.Enums
+﻿using System.ComponentModel;
+
+namespace Blog.Common.Enums
 {
     public enum RoleType
     {
-        Administrator =1, 
+        [Description("Администратор")]
+        Administrator =1,
+        [Description("Модератор")]
         Moderator =2,
-        User=3
+        [Description("Пользователь")]
+        User =3
     }
 }

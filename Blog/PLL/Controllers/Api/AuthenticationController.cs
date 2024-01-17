@@ -36,7 +36,7 @@ namespace Blog.PLL.Controlers.Api
             {
                 return StatusCode(401, "Неверный логин или пароль");
             }
-            var roleClaims = models.Roles.Select(x => new Claim(ClaimTypes.Role, x.ToString()));
+            var roleClaims = models.Roles.Select(x => new Claim(ClaimTypes.Role, x.RoleType.ToString()));
             var claims = new List<Claim>
             {
               new Claim(ClaimsIdentity.DefaultNameClaimType, models.Email),

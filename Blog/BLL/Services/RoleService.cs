@@ -51,8 +51,14 @@ namespace Blog.BLL.Services
         }
         public async Task Delete(long id)
         {
+
             var context = await _contextFactory.CreateDbContextAsync();
+            if (await context.Roles.AnyAsync(x => x.Id == id && x.Users.Count > 0)) 
+            {
+                throw new InvalidOperationException("Невозможно удалить роль, так-как есть пользователи с данной ролью");
+            }
             context.Remove(new RoleEntity() { Id = id });
+
             await context.SaveChangesAsync();
         }
     }

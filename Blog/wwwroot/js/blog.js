@@ -59,6 +59,24 @@ function deleteComment(commentId) {
     }
 }
 
+function deleteRole(roleId) {
+    var result = confirm("Вы уверены, что хотите удалить этот роль?");
+
+    if (result) {
+        // Пользователь нажал "Да", отправляем запрос к API и обновляем страницу
+        $.ajax({
+            type: 'DELETE',
+            CORS: true,
+            url: '/api/role/'.concat(roleId),  // Укажите правильный URL для вашего API
+            success: function (data) {
+                window.location.reload();
+            },
+            error: function (error) {
+                console.error('Ошибка', error);
+            }
+        });
+    }
+}
 
     $('#logoutButton').click(function () {
         $.ajax({
@@ -101,3 +119,4 @@ function deleteComment(commentId) {
             });
         });
     });
+

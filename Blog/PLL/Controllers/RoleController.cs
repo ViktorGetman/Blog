@@ -2,17 +2,20 @@
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
 using Blog.BLL.Services;
+using Blog.PLL.ViewModel.Post;
 using Blog.PLL.ViewModel.Role;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.PLL.Controllers
 {
-    public class RoleCollectionController : Controller
+
+    [Route("[controller]")]
+    public class RoleController : Controller
     {
         private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
 
-        public RoleCollectionController(IRoleService roleService, IMapper mapper)
+        public RoleController(IRoleService roleService, IMapper mapper)
         {
             _roleService = roleService;
             _mapper = mapper;
@@ -24,6 +27,19 @@ namespace Blog.PLL.Controllers
             var roleViewModels = roleModels.Select(x => _mapper.Map<RoleModel, RoleViewModel>(x)).ToArray();
             var roleCollectionViewModel = new RoleCollectionViewModel() { Roles = roleViewModels };
             return View(roleCollectionViewModel);
+        }
+        [Route("Add")]
+        public IActionResult Add()
+        {
+            return View();
+        }
+        [Route("Edit/{id}")]
+        public async Task<IActionResult> Edit(long id)
+        {
+
+            var roleModel = await _roleService.GetById(id);
+            var roleViewModel = _mapper.Map<RoleModel, RoleViewModel>(roleModel);
+            return View(roleViewModel);
         }
     }
 }

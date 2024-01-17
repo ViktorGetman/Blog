@@ -1,11 +1,18 @@
-﻿@model Blog.PLL.ViewModel.Role.RoleCollectionViewModel
-
+﻿@using Blog.Common.Enums;
+@using System.Security.Claims;
+@model Blog.PLL.ViewModel.Role.RoleCollectionViewModel
+@{
+    var isAdministrator = User.Identity.IsAuthenticated && User.FindAll(ClaimTypes.Role).Any(x => x.Value == RoleType.Administrator.ToString());
+}
 <div class="container mt-4">
     <h1>Список ролей</h1>
+    @if(isAdministrator)
+    {
     <div>
         <!-- Добавляем кнопку "Перейти к посту" -->
-        <a href="@Url.Action("Create", "Role")" class="btn btn-primary">Добавить</a>
+        <a href="@Url.Action("Add", "Role")" class="btn btn-primary">Добавить</a>
     </div>
+    }
     @foreach (var role in Model.Roles)
     {
         <div class="card mt-3">
@@ -20,14 +27,14 @@
                 <p class="text-muted">
                     <strong>Количество пользователей:</strong> @role.UserCount
                 </p>
-                <div class="d-flex justify-content-between">
-                    <div> 
-                        <a href="@Url.Action("Edit", "Role", new { id = role.Id })" class="btn btn-primary">Редактировать</a>
+                @if (isAdministrator)
+                {
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-sm btn-outline-primary mr-2" href="/Role/Edit/@role.Id">Редактировать</a>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteRole(@role.Id)">Удалить</button>
                     </div>
-                    <div>
-                        <a href="@Url.Action("Delete", "Role", new { id = role.Id })" class="btn btn-primary">Удалить</a>
-                    </div>
-                </div>
+                }
+
             </div>
         </div>
     }
