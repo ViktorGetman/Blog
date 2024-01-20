@@ -1,0 +1,95 @@
+﻿@model Blog.PLL.ViewModel.UserRole.UserRoleEditViewModel
+@{
+    ViewData["Title"] = "Редактирование роли пользователя";
+}
+<div class="container mt-4">
+    <h1>Редактирование роли пользователя</h1>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">@Model.User.FullName</h5>
+            <p>
+                <strong>Email:</strong> @Model.User.Email
+            </p>
+            <p>
+                <strong>Возраст:</strong> @Model.User.Age
+            </p>
+
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+
+            <form id="UserEditForm">
+                @* Защита от подделки межсайтовых запросов *@
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="userId" name="userId" value="@Model.User.Id">
+                <div class="form-group">
+                    <label for="newRole">Выберите роль:</label>
+                    <div class="input-group mb-3">
+                        <select class="form-control"  id="newRole" name="newRole" required>
+                            @foreach (var role in Model.Roles)
+                            {
+                                <option value="@((int)role.Id)">@role.Name</option>
+                            }
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="button" onclick="addRole()">Добавить роль</button>
+                        </div>
+                    </div>
+                    <div id="rolesList" class="mt-2">
+                        @foreach (var role in Model.AssignedRoles)
+                        {
+                            <span class='badge badge-light mr-2' data-role-id="@role.Id"> @role.Name <button class='btn btn-sm btn-danger' onclick='removeRole(this)'>x</button></span>
+                        }
+                    </div>
+                </div>
+                <button type="button" onclick="editRoles()" class="btn btn-primary">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function addRole() {
+        var roleInput = $("#newRole option:selected");
+
+        if (!$("#rolesList").find('[data-role-id="' + roleInput.val() + '"]').length) {
+
+            var roleListItem = $("<span class='badge badge-light mr-2' data-role-id='"+roleInput.val()+"'>" + roleInput.text() + " <button class='btn btn-sm btn-danger' onclick='removeTag(this)'>x</button></span>");
+
+            $("#rolesList").append(roleListItem);
+
+        }
+    }
+
+    function removeRole(button) {
+
+        $(button).parent().remove();
+    }
+
+    function editRoles() {
+        var selectedRoles = [];
+        $("#rolesList [data-role-id]").each(function () {
+            selectedRoles.push($(this).data("role-id"));
+        });
+        var userRoleData = {
+            UserId: $("#userId").val(),
+            RoleIds: selectedRoles,
+
+        };
+
+
+        $.ajax({
+            type: "PUT",
+            url: "/api/userRole/Edit",
+            contentType: "application/json",
+            data: JSON.stringify(userRoleData),
+            success: function (response) {
+
+                window.location.href = '/user/'.concat(userRoleData.UserId);
+            },
+            error: function (error) {
+
+                console.error(error);
+            }
+        });
+    }
+</script>

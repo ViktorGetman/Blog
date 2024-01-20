@@ -5,6 +5,7 @@ using Blog.PLL.DTO.User;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog.PLL.Controlers.Api
 {
@@ -58,6 +59,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpPut]
         [Route("edit")]
+        [Authorize]
         public async Task<IActionResult> Edit([FromBody] UpdateUserDto dto)
         {
 
@@ -70,6 +72,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             await _service.Delete(id);

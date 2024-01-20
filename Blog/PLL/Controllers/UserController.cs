@@ -2,6 +2,7 @@
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
 using Blog.PLL.ViewModel.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.PLL.Controllers
@@ -37,6 +38,7 @@ namespace Blog.PLL.Controllers
             return View();
         }
         [Route("edit")]
+        [Authorize]
         public async Task<IActionResult> Edit()
         {
             return View();

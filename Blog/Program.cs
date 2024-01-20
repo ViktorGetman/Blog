@@ -31,10 +31,11 @@ builder.Services.AddDbContextFactory<BlogDbContext>(x => x.UseSqlite(connectionS
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/login";
+        options.LoginPath = "/User/Authorization";
+
+        options.AccessDeniedPath = "/error/403";
     });
 builder.Services.AddAuthorization();
-
 
 
 var app = builder.Build();
@@ -44,7 +45,6 @@ app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -52,7 +52,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseExceptionHandler("/Error/500");
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}");

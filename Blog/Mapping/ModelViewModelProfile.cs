@@ -41,6 +41,7 @@ namespace Blog.Mapping
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.Roles.Select(x => x.Name)));
             
             CreateMap<RoleModel, RoleViewModel>();
+            CreateMap<RoleShortModel, RoleViewModel>();
 
 
 

@@ -1,4 +1,5 @@
-﻿@model Blog.PLL.ViewModel.User.UserCollectionViewModel
+﻿@using Blog.Common.Enums;
+@model Blog.PLL.ViewModel.User.UserCollectionViewModel
 
 @{
     ViewData["Title"] = "Список пользователей";
@@ -31,7 +32,11 @@
                     </div>
                     </div>
                     <div>
-                        <a href="@Url.Action(null, "User", new { id = user.Id })" class="btn btn-primary">Страница пользователя</a>
+                        <a href="@Url.Action(null, "User", new { id = user.Id })" class="btn btn-sm btn-outline-primary mr-2">Страница пользователя</a>
+                        @if (User.IsInRole(nameof(RoleType.Administrator)))
+                        {
+                            <a class="btn btn-sm btn-outline-primary" href="/UserRole/Edit/@user.Id">Изменить роли</a>
+                        }
                     </div>
                 </div>
             </div>

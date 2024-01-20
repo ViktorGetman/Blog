@@ -15,5 +15,10 @@ namespace Blog.PLL.ViewModel.User
 
         public int CommentsCount { get; set; }
         public int PostsCount { get; set; }
+
+        public static implicit operator UserShortViewModel(UserViewModel v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

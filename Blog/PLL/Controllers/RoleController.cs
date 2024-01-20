@@ -2,8 +2,10 @@
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
 using Blog.BLL.Services;
+using Blog.Common.Enums;
 using Blog.PLL.ViewModel.Post;
 using Blog.PLL.ViewModel.Role;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.PLL.Controllers
@@ -21,6 +23,7 @@ namespace Blog.PLL.Controllers
             _mapper = mapper;
 
         }
+        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
         public async Task<IActionResult> Index()
         {
             var roleModels = await _roleService.Get();
@@ -29,11 +32,13 @@ namespace Blog.PLL.Controllers
             return View(roleCollectionViewModel);
         }
         [Route("Add")]
+        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
         public IActionResult Add()
         {
             return View();
         }
         [Route("Edit/{id}")]
+        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
         public async Task<IActionResult> Edit(long id)
         {
 

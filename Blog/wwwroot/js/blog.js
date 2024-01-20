@@ -30,7 +30,7 @@ function deletePost(postId) {
             CORS: true,
             url: '/api/post/'.concat(postId),  // Укажите правильный URL для вашего API
             success: function (data) {
-                window.location.reload();
+                window.location.href='/home';
             },
             error: function (error) {
                 console.error('Ошибка', error);

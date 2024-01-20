@@ -5,6 +5,7 @@ using Blog.PLL.DTO.Post;
 using Blog.PLL.DTO.Tag;
 using Blog.PLL.DTO.User;
 using Blog.PLL.DTO.Role;
+using Blog.PLL.DTO.UserRole;
 
 namespace Blog.Mapping
 {
@@ -27,6 +28,7 @@ namespace Blog.Mapping
             CreateMap<AddRoleDto, RoleModel>();
             CreateMap<UpdateRoleDto, RoleModel>();
             CreateMap<AddUserDto, CreateUserModel>();
+            CreateMap<EditUserRoleDto, EditUserRoleModel>();
 
         }
     }

@@ -2,29 +2,9 @@
 
 <div class="container mt-4">
     <h1>Список постов по тегу @Model.TagName</h1>
-
     @foreach (var post in Model.Posts)
     {
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title">@post.PostName</h5>
-                <p class="card-text">@post.PostContent</p>
-                <p class="text-muted">
-                    <strong>Автор:</strong> @post.UserFullName - <span class="small">@post.UserEmail</span>
-                </p>
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <strong>Количество комментариев:</strong> @post.CommentsCount
-                    </div>
-                    <div>
-                        <!-- Добавляем кнопку "Перейти к посту" -->
-                        <a href="@Url.Action(null, "PostDetail", new { id = post.Id })" class="btn btn-primary">Перейти к посту</a>
-                    </div>
-                </div>
-                <div>
-                    <strong>Теги:</strong> @string.Join(", ", post.Tags)
-                </div>
-            </div>
-        </div>
+        @await Html.PartialAsync("PostShortPartial", post)
+
     }
 </div>

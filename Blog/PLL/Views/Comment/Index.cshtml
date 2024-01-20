@@ -12,8 +12,11 @@
         <div class="card mt-4">
             <div class="card-body">
                 <h5 class="card-title">
-                    <a strong="@Url.Action(null, "CommentDetail", new { comment = comment.Content })">@comment.Content</a>
+                    <a strong="@Url.Action(null, "PostDetail", new { id=comment.PostId})">@comment.Content</a>
                 </h5>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteComment(@comment.Id)">Удалить</button>
+                </div>
             </div>
         </div>
     }

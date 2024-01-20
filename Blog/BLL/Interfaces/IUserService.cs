@@ -16,5 +16,6 @@ namespace Blog.BLL.Interfaces
 
         public Task Delete(long id);
 
+        public Task UpdateUserRole(EditUserRoleModel model);
     }
 }

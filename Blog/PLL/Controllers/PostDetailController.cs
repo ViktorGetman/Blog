@@ -2,6 +2,7 @@
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
 using Blog.PLL.ViewModel.Post;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
@@ -30,11 +31,13 @@ public class PostDetailController : Controller
         return View(postViewModel);
     }
     [Route("Add")]
+    [Authorize]
     public IActionResult Add()
     {
         return View();
     }
     [Route("Edit/{id}")]
+    [Authorize]
     public async Task<IActionResult> Edit(long id)
     {
 

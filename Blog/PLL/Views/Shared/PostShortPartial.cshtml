@@ -1,4 +1,5 @@
-﻿@model Blog.PLL.ViewModel.Post.PostShortViewModel
+﻿@using Blog.Common.Enums;
+@model Blog.PLL.ViewModel.Post.PostShortViewModel
 
 <div class="card mt-3">
     <div class="card-body">
@@ -15,12 +16,17 @@
                 <!-- Добавляем кнопку "Перейти к посту" -->
                 <a href="@Url.Action(null, "PostDetail", new { id = Model.Id })" class="btn btn-primary mr-2 btn-sm">Перейти к посту</a>
 
-                @if (User.Identity.IsAuthenticated && User.FindFirst("Id").Value == Model.UserId.ToString())
+                @if (User.Identity.IsAuthenticated)
                 {
-
-                    <a class="btn btn-sm btn-outline-primary mr-2" href="/PostDetail/Edit/@Model.Id">Редактировать</a>
-                    <button class="btn btn-sm btn-outline-danger" onclick="deletePost(@Model.Id)">Удалить</button>
-
+                    @if (User.FindFirst("Id").Value == Model.UserId.ToString())
+                    {
+                        <a class="btn btn-sm btn-outline-primary mr-2" href="/PostDetail/Edit/@Model.Id">Редактировать</a>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deletePost(@Model.Id)">Удалить</button>
+                    }
+                    else if (User.IsInRole(nameof(RoleType.Administrator)) || User.IsInRole(nameof(RoleType.Moderator)))
+                    {
+                        <button class="btn btn-sm btn-outline-danger" onclick="deletePost(@Model.Id)">Удалить</button>
+                    }
                 }
             </div>
         </div>

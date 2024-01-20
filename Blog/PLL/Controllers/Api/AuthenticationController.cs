@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System;
 using IAuthenticationService = Blog.BLL.Interfaces.IAuthenticationService;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog.PLL.Controlers.Api
 {
@@ -52,6 +53,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpPost]
         [Route("logout")]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

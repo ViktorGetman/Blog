@@ -1,4 +1,5 @@
-﻿@model Blog.PLL.ViewModel.User.UserViewModel
+﻿@using Blog.Common.Enums;
+@model Blog.PLL.ViewModel.User.UserViewModel
 
 @{
     ViewData["Title"] = $"Профиль пользователя {Model.FullName}";
@@ -6,17 +7,27 @@
 
 <div class="container mt-4">
     <h1>@Model.FullName</h1>
-    
-    @if (User.Identity.IsAuthenticated && User.FindFirst("Id").Value == Model.Id.ToString())
+
+    @if (User.Identity.IsAuthenticated)
     {
         <div class="d-flex justify-content-end">
-             <a class="btn btn-sm btn-outline-primary mr-2" href="/user/edit">Редактировать</a>     
-            <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(@Model.Id)">Удалить</button>
+            @if (User.FindFirst("Id").Value == Model.Id.ToString())
+            {
+                <a class="btn btn-sm btn-outline-primary mr-2" href="/user/edit">Редактировать</a>
+            }
+            @if (User.IsInRole(nameof(RoleType.Administrator)))
+            {
+                <a class="btn btn-sm btn-outline-primary mr-2" href="/userRole/edit/@Model.Id">Изменить роль</a>
+            }
+            @if (User.IsInRole(nameof(RoleType.Administrator)) || User.IsInRole(nameof(RoleType.Moderator)) || User.FindFirst("Id").Value == Model.Id.ToString())
+            {
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(@Model.Id)">Удалить</button>
+            }
         </div>
     }
-  
+
     <div class="card mt-3">
-       <div class="card-body">
+        <div class="card-body">
             <p>
                 <strong>Email:</strong> @Model.Email
             </p>

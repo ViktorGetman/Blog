@@ -2,6 +2,7 @@
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
 using Blog.PLL.DTO.Post;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.PLL.Controlers.Api
@@ -44,6 +45,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpPost]
         [Route("")]
+        [Authorize]
         public async Task<IActionResult> Add(AddPostDto request)
         {
             var model = _mapper.Map<AddPostDto, PostModel>(request);
@@ -55,6 +57,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpPut]
         [Route("")]
+        [Authorize]
         public async Task<IActionResult> Edit([FromBody] UpdatePostDto dto)
         {
 
@@ -67,6 +70,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             await _service.Delete(id);

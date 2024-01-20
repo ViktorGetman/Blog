@@ -28,6 +28,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpGet]
         [Route("")]
+        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
         public async Task<IActionResult> GetRole()
         {
             var models = await _service.Get();
@@ -38,6 +39,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = $"{nameof(RoleType.Administrator)}")]
         public async Task<IActionResult> GetRoleById(long id)
         {
             var model = await _service.GetById(id);

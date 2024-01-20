@@ -4,8 +4,10 @@
     <h1>Список постов</h1>
 
     <div>
-        <!-- Добавляем кнопку "Перейти к посту" -->
-        <a href="@Url.Action("Add", "PostDetail")" class="btn btn-primary">Создать пост</a>
+        @if (User.Identity?.IsAuthenticated ??false)
+        {
+            <a href="@Url.Action("Add", "PostDetail")" class="btn btn-primary">Создать пост</a>
+        }
     </div>
 
     @foreach (var post in Model.Posts)

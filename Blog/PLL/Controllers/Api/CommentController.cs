@@ -2,6 +2,7 @@
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
 using Blog.PLL.DTO.Comment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,6 +46,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpPost]
         [Route("")]
+        [Authorize]
         public async Task<IActionResult> Add(AddCommentDto request)
         {
             var model = _mapper.Map<AddCommentDto, CommentModel>(request);
@@ -56,6 +58,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpPut]
         [Route("")]
+        [Authorize]
         public async Task<IActionResult> Edit([FromBody] UpdateCommentDto dto)
         {
 
@@ -68,6 +71,7 @@ namespace Blog.PLL.Controlers.Api
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             await _service.Delete(id);

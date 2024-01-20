@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
+using Blog.Common.Enums;
 using Blog.PLL.ViewModel.Comment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.PLL.Controllers
@@ -21,6 +23,7 @@ namespace Blog.PLL.Controllers
 
         }
         [Route("")]
+        [Authorize(Roles = $"{nameof(RoleType.Administrator)}, {nameof(RoleType.Moderator)}")]
         public async Task<IActionResult> Index()
         {
 
@@ -30,6 +33,7 @@ namespace Blog.PLL.Controllers
             return View(commentCollectionViewModel);
         }
         [Route("edit/{commentId}")]
+        [Authorize]
         public async Task<IActionResult> Edit(long commentId)
         {
 
@@ -38,6 +42,7 @@ namespace Blog.PLL.Controllers
             return View(commentViewModel);
         }
         [Route("add/{postId}")]
+        [Authorize]
         public IActionResult Add(long postId)
         {
             var userId = long.Parse(User.FindFirst("Id").Value);

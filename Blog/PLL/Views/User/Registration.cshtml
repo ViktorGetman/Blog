@@ -19,7 +19,7 @@
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 success: function (data) {
-                    console.log('Успех', data);
+                    window.location.href='/login'
                 },
                 error: function (error) {
                     console.error('Ошибка', error);
