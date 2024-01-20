@@ -13,7 +13,6 @@
                 <strong>Количество комментариев:</strong> @Model.CommentsCount
             </div>
             <div>
-                <!-- Добавляем кнопку "Перейти к посту" -->
                 <a href="@Url.Action(null, "PostDetail", new { id = Model.Id })" class="btn btn-primary mr-2 btn-sm">Перейти к посту</a>
 
                 @if (User.Identity.IsAuthenticated)
