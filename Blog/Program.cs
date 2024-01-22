@@ -14,13 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews().AddRazorOptions(x =>
-{
-    x.ViewLocationFormats.Clear();
-    x.ViewLocationFormats.Add("/PLL/Views/{1}/{0}.cshtml");
-    x.ViewLocationFormats.Add("/PLL/Views/Shared/{0}.cshtml");
-    x.ViewLocationFormats.Add("/PLL/Views/{0}.cshtml");
-});
+builder.Services.AddControllersWithViews();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -52,7 +46,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseExceptionHandler("/Error/500");
+///app.UseExceptionHandler("/Error/500");
+///app.UseExceptionHandler(x=>x.)
 app.UseStatusCodePagesWithReExecute("/Error/{0}");
 app.MapControllerRoute(
     name: "default",

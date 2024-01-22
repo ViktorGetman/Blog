@@ -1,0 +1,56 @@
+﻿@using Blog.Core.Enums;
+@model Blog.ViewModel.User.UserViewModel
+
+@{
+    ViewData["Title"] = $"Профиль пользователя {Model.FullName}";
+}
+
+<div class="container mt-4">
+    <h1>@Model.FullName</h1>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="d-flex justify-content-end">
+            @if (User.FindFirst("Id").Value == Model.Id.ToString())
+            {
+                <a class="btn btn-sm btn-outline-primary mr-2" href="/user/edit">Редактировать</a>
+            }
+            @if (User.IsInRole(nameof(RoleType.Administrator)))
+            {
+                <a class="btn btn-sm btn-outline-primary mr-2" href="/userRole/edit/@Model.Id">Изменить роль</a>
+            }
+            @if (User.IsInRole(nameof(RoleType.Administrator)) || User.IsInRole(nameof(RoleType.Moderator)) || User.FindFirst("Id").Value == Model.Id.ToString())
+            {
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(@Model.Id)">Удалить</button>
+            }
+        </div>
+    }
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <p>
+                <strong>Email:</strong> @Model.Email
+            </p>
+            <p>
+                <strong>Возраст:</strong> @Model.Age
+            </p>
+            <p>
+                <strong>Роли:</strong> <span class="font-weight-normal">@string.Join(", ", Model.Roles)</span>
+            </p>
+            <p>
+                <strong>Количество комментариев:</strong> @Model.CommentsCount
+            </p>
+            <p>
+                <strong>Количество постов:</strong> @Model.Posts.Count
+            </p>
+        </div>
+    </div>
+
+    <h2 class="mt-4">Посты пользователя</h2>
+
+    @foreach (var post in Model.Posts)
+    {
+        @await Html.PartialAsync("PostShortPartial", post)
+    }
+
+</div>

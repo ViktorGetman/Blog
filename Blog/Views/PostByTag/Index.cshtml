@@ -1,0 +1,10 @@
+﻿@model Blog.ViewModel.Post.PostsByTagViewModel
+
+<div class="container mt-4">
+    <h1>Список постов по тегу @Model.TagName</h1>
+    @foreach (var post in Model.Posts)
+    {
+        @await Html.PartialAsync("PostShortPartial", post)
+
+    }
+</div>

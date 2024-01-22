@@ -1,0 +1,23 @@
+﻿@model Blog.ViewModel.Comment.CommentCollectionViewModel
+
+@{
+    ViewData["Title"] = "Список коментариев";
+}
+
+<div class="container mt-4">
+    <h1>Список коментариев</h1>
+
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a strong="@Url.Action(null, "PostDetail", new { id=comment.PostId})">@comment.Content</a>
+                </h5>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteComment(@comment.Id)">Удалить</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,85 @@
+﻿@model Blog.ViewModel.Post.PostShortViewModel
+
+<div class="container mt-4">
+    <h1>Редактаровать пост</h1>
+
+    <form id="createPostForm">
+        <input type="hidden" id="id" name="id" value="@Model.Id">
+
+        <div class="form-group">
+            <label for="postName">Название:</label>
+            <input type="text" value="@Model.PostName" class="form-control" id="postName" name="postName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="postContent">Содержание поста:</label>
+            <textarea class="form-control" id="postContent" name="postContent" rows="4" required>@Model.PostContent</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="tags">Теги:</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="tagsInput" placeholder="Введите тег">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" onclick="addTag()">Добавить тег</button>
+                </div>
+            </div>
+            <div id="tagsList" class="mt-2">
+                @foreach(var tag in Model.Tags)
+                {
+                    <span class='badge badge-light mr-2'> @tag <button class='btn btn-sm btn-danger' onclick='removeTag(this)'>x</button></span>
+                }
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="editPost()">Сохранить</button>
+    </form>
+</div>
+
+
+<script>
+    function addTag() {
+        var tagInput = $("#tagsInput");
+        var tag = tagInput.val().trim();
+
+        if (tag) {
+
+            var tagListItem = $("<span class='badge badge-light mr-2'>" + tag + " <button class='btn btn-sm btn-danger' onclick='removeTag(this)'>x</button></span>");
+
+            $("#tagsList").append(tagListItem);
+
+            tagInput.val("");
+        }
+    }
+
+    function removeTag(button) {
+
+        $(button).parent().remove();
+    }
+
+    function editPost() {
+
+        var postData = {
+            PostName: $("#postName").val(),
+            PostContent: $("#postContent").val(),
+            Tags: $("#tagsList .badge").map(function () { return $(this).text().replace('x', '').trim(); }).get(),
+            Id: $("#id").val(),
+        };
+
+
+        $.ajax({
+            type: "PUT",
+            url: "/api/post/",
+            contentType: "application/json",
+            data: JSON.stringify(postData),
+            success: function (response) {
+
+                window.location.href = '/postdetail/'.concat(postData.Id);
+            },
+            error: function (error) {
+
+                console.error(error);
+            }
+        });
+    }
+</script>

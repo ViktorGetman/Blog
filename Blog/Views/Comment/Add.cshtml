@@ -1,0 +1,50 @@
+﻿@model Blog.ViewModel.Comment.AddCommentViewModel
+@{
+    ViewData["Title"] = "Добавление коментария";
+}
+<script>
+    $(document).ready(function () {
+        $('#CommentAddForm').submit(function (event) {
+            event.preventDefault();
+
+            var formData = {
+                PostId: $('#PostId').val(),
+                UserId: $('#UserId').val(),
+                Content: $('#Content').val(),
+            };
+
+            $.ajax({
+                type: 'POST',
+                CORS: true,
+                url: '/api/comment',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (data) {
+                    window.location.href = '/postDetail/'.concat(formData.PostId);
+                },
+                error: function (error) {
+                    console.error('Ошибка', error);
+                }
+            });
+        });
+    });
+</script>
+
+<div class="container mt-4">
+    <h1>Добавление коментария</h1>
+
+    <form id="CommentAddForm">
+        @* Защита от подделки межсайтовых запросов *@
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" id="PostId" name="PostId" value="@Model.PostId">
+        <input type="hidden" id="UserId" name="UserId" value="@Model.UserId">
+
+        <div class="form-group">
+            <label for="Content">Содержимое комментария</label>
+            <input type="text" class="form-control" id="Content" name="Content" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>

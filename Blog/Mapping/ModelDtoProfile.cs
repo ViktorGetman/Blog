@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Blog.BLL.Models;
-using Blog.PLL.DTO.Comment;
-using Blog.PLL.DTO.Post;
-using Blog.PLL.DTO.Tag;
-using Blog.PLL.DTO.User;
-using Blog.PLL.DTO.Role;
-using Blog.PLL.DTO.UserRole;
+using Blog.DTO.Comment;
+using Blog.DTO.Post;
+using Blog.DTO.Role;
+using Blog.DTO.Tag;
+using Blog.DTO.User;
+using Blog.DTO.UserRole;
 
 namespace Blog.Mapping
 {

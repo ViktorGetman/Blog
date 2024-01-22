@@ -1,0 +1,46 @@
+﻿@using Blog.Core.Enums;
+@model Blog.ViewModel.User.UserCollectionViewModel
+
+@{
+    ViewData["Title"] = "Список пользователей";
+}
+
+<div class="container mt-4">
+    <h1>Список пользователей</h1>
+
+    @foreach (var user in Model.Users)
+    {
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">@user.FullName</h5>
+                <p class="text-muted">
+                    <strong>Роли:</strong> <span class="font-weight-normal">@string.Join(", ", user.Roles)</span>
+                </p>
+                <p>
+                    <strong>Email:</strong> @user.Email
+                </p>
+                <p>
+                    <strong>Возраст:</strong> @user.Age
+                </p>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex  align-middle">
+                    <div class ="mr-3">
+                        <strong>Количество комментариев:</strong> @user.CommentsCount
+                    </div>
+                    <div>
+                        <strong>Количество постов:</strong> @user.PostsCount
+                    </div>
+                    </div>
+                    <div>
+                        <a href="@Url.Action(null, "User", new { id = user.Id })" class="btn btn-sm btn-outline-primary mr-2">Страница пользователя</a>
+                        @if (User.IsInRole(nameof(RoleType.Administrator)))
+                        {
+                            <a class="btn btn-sm btn-outline-primary" href="/UserRole/Edit/@user.Id">Изменить роли</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

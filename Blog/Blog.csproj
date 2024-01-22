@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DAL\DB\" />
+    <ProjectReference Include="..\Blog.Dal\Blog.DAL.csproj" />
+    <ProjectReference Include="..\Blog.PLL\Blog.BLL.csproj" />
+    <ProjectReference Include="..\Core\Blog.Core.csproj" />
   </ItemGroup>
 
 </Project>
