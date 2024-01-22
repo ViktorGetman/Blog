@@ -11,7 +11,7 @@ namespace Blog.BLL.Services
     {
         private readonly IDbContextFactory<BlogDbContext> _contextFactory;
         private readonly IMapper _mapper;
-        public CommentService(IDbContextFactory<BlogDbContext> contextFactory, IMapper mapper)
+        public CommentService(DbContextFactory contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;
