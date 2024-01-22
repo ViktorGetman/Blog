@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.BLL.Services
 {
-    public class CommentService:ICommentService
+    public class CommentService : ICommentService
     {
         private readonly IDbContextFactory<BlogDbContext> _contextFactory;
         private readonly IMapper _mapper;
-        public CommentService(DbContextFactory contextFactory, IMapper mapper)
+        public CommentService(IDbContextFactory<BlogDbContext> contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;
@@ -34,21 +34,21 @@ namespace Blog.BLL.Services
             var context = await _contextFactory.CreateDbContextAsync();
             var entity = _mapper.Map<CommentEntity>(model);
             await context.Comments.AddAsync(entity);
-            await context.SaveChangesAsync(); 
+            await context.SaveChangesAsync();
 
         }
         public async Task Update(CommentModel model)
         {
             var context = await _contextFactory.CreateDbContextAsync();
             var entity = await context.Comments.FirstOrDefaultAsync(x => x.Id == model.Id);
-            entity.Content =model.Content;
+            entity.Content = model.Content;
             context.Comments.Update(entity);
             await context.SaveChangesAsync();
         }
         public async Task Delete(long id)
         {
             var context = await _contextFactory.CreateDbContextAsync();
-            context.Remove(new CommentEntity() {Id = id});
+            context.Remove(new CommentEntity() { Id = id });
             await context.SaveChangesAsync();
         }
     }

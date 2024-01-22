@@ -22,7 +22,7 @@ namespace Blog.BLL.Test
 
             var postId = 1;
             var userId = 1;
-            var commentModel = new CommentModel { PostId = postId, Content = "Test Comment", UserId = userId};
+            var commentModel = new CommentModel { PostId = postId, Content = "Test Comment", UserId = userId };
             var comment = new CommentEntity { PostId = postId, Content = "Test Comment", UserId = userId };
 
             mockMapper.Setup(m => m.Map<CommentEntity>(commentModel)).Returns(comment);
