@@ -16,7 +16,7 @@ namespace Blog.BLL.Test
         public async Task AddComment_ShouldAddCommentToDatabase()
         {
             // Arrange
-            var mockDbContextFactory = new Mock<DbContext<DbContextOptionsBuilder>>(); // Замените на фактический тип вашего DbContext
+            var mockDbContextFactory = new Mock<BlogDbContext<DbContextOptionsBuilder>>(); // Замените на фактический тип вашего DbContext
             var mockMapper = new Mock<IMapper>();
             var commentService = new CommentService(mockDbContextFactory.Object, mockMapper.Object);
 
