@@ -14,12 +14,13 @@ namespace Blog.Controllers.Api
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly ILogger<UserRoleController> _logger;
 
-        public UserRoleController(IUserService userService, IMapper mapper)
+        public UserRoleController(IUserService userService, IMapper mapper, ILogger<UserRoleController> logger)
         {
             _userService = userService;
             _mapper = mapper;
-
+            _logger = logger;
         }
         [HttpPut]
         [Route("edit")]
@@ -29,6 +30,7 @@ namespace Blog.Controllers.Api
 
             var model = _mapper.Map<EditUserRoleDto, EditUserRoleModel>(dto);
             await _userService.UpdateUserRole(model);
+            _logger.LogInformation("Роль пользователя изменена (email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }

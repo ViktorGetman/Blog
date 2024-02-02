@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Blog.BLL.Interfaces;
 using Blog.BLL.Models;
+using Blog.DTO;
 using Blog.DTO.Comment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,16 @@ namespace Blog.Controllers.Api
     {
 
 
-        private ICommentService _service;
-        private IMapper _mapper;
+        private readonly ICommentService _service;
+        private readonly IMapper _mapper;
+        private readonly ILogger<CommentController> _logger;
 
-        public CommentController(ICommentService service, IMapper mapper)
+        public CommentController(ICommentService service, IMapper mapper, ILogger<CommentController> logger)
         {
 
             _service = service;
             _mapper = mapper;
+            _logger = logger;
         }
 
 
@@ -51,7 +54,7 @@ namespace Blog.Controllers.Api
         {
             var model = _mapper.Map<AddCommentDto, CommentModel>(request);
             await _service.Create(model);
-
+            _logger.LogInformation("Добавлен комментарий пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
         }
 
@@ -64,6 +67,7 @@ namespace Blog.Controllers.Api
 
             var model = _mapper.Map<UpdateCommentDto, CommentModel>(dto);
             await _service.Update(model);
+            _logger.LogInformation("Изменен комментарий пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }
@@ -75,7 +79,7 @@ namespace Blog.Controllers.Api
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             await _service.Delete(id);
-
+            _logger.LogInformation("Удален комментарий пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }

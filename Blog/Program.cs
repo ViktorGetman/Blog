@@ -3,6 +3,9 @@ using Blog.Extansions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using NLog.Web;
+using NLog;
+using Microsoft.AspNetCore.Diagnostics;
 
 IConfiguration configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -31,6 +34,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 builder.Services.AddAuthorization();
 
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 
 var app = builder.Build();
 
@@ -47,8 +52,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 ///app.UseExceptionHandler("/Error/500");
-///app.UseExceptionHandler(x=>x.)
+
 app.UseStatusCodePagesWithReExecute("/Error/{0}");
+app.UseExceptionHandler(errorApp =>
+{
+    var logger = errorApp.ApplicationServices.GetService<Microsoft.Extensions.Logging.ILogger<Program>>();
+    errorApp.Run(async context =>
+    {
+        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+        var error = exceptionHandlerPathFeature?.Error;
+        if (error != null)
+        {
+            logger?.LogError(error, "При обработке запроса произошла непредвиденная ошибка");
+        }
+        context.Response.StatusCode=500;
+    });
+});
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}");

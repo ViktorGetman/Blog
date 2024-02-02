@@ -15,14 +15,16 @@ namespace Blog.Controllers.Api
     {
 
 
-        private IRoleService _service;
-        private IMapper _mapper;
+        private readonly IRoleService _service;
+        private readonly IMapper _mapper;
+        private readonly ILogger<RoleController> _logger;
 
-        public RoleController(IRoleService service, IMapper mapper)
+        public RoleController(IRoleService service, IMapper mapper,ILogger<RoleController> logger)
         {
 
             _service = service;
             _mapper = mapper;
+            _logger = logger;
         }
 
 
@@ -55,7 +57,7 @@ namespace Blog.Controllers.Api
         {
             var model = _mapper.Map<AddRoleDto, RoleModel>(request);
             await _service.Create(model);
-
+            _logger.LogInformation("Добавлена роль пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
         }
 
@@ -68,6 +70,7 @@ namespace Blog.Controllers.Api
 
             var model = _mapper.Map<UpdateRoleDto, RoleModel>(dto);
             await _service.Update(model);
+            _logger.LogInformation("Изменена роль пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }
@@ -79,7 +82,7 @@ namespace Blog.Controllers.Api
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             await _service.Delete(id);
-
+            _logger.LogInformation("Удалена роль пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }

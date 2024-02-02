@@ -5,8 +5,8 @@
 }
 <script>
     $(document).ready(function () {
-        $('#RoleAddForm').submit(function (event) {
-            event.preventDefault();
+        var RoleAddForm = $('#RoleAddForm');
+        validateRoleForm(RoleAddForm, function (form) {
 
             var formData = {
                 Name: $('#Name').val(),
@@ -17,7 +17,7 @@
             $.ajax({
                 type: 'POST',
                 CORS: true,
-                url: '/api/role', 
+                url: '/api/role',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 success: function (data) {
@@ -51,7 +51,7 @@
             <select class="form-control" id="RoleType" name="RoleType" required>
                 @foreach (RoleType roleTypeValue in Enum.GetValues(typeof(RoleType)))
                 {
-                
+
                     <option value="@((int)roleTypeValue)" @(RoleType.User == roleTypeValue ? "selected" : "")>@roleTypeValue.ToDescription()</option>
                 }
             </select>

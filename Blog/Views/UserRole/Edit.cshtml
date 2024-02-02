@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label for="newRole">Выберите роль:</label>
                     <div class="input-group mb-3">
-                        <select class="form-control"  id="newRole" name="newRole" required>
+                        <select class="form-control" id="newRole" name="newRole" required>
                             @foreach (var role in Model.Roles)
                             {
                                 <option value="@((int)role.Id)">@role.Name</option>
@@ -42,7 +42,7 @@
                         }
                     </div>
                 </div>
-                <button type="button" onclick="editRoles()" class="btn btn-primary">Сохранить</button>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
             </form>
         </div>
     </div>
@@ -53,7 +53,7 @@
 
         if (!$("#rolesList").find('[data-role-id="' + roleInput.val() + '"]').length) {
 
-            var roleListItem = $("<span class='badge badge-light mr-2' data-role-id='"+roleInput.val()+"'>" + roleInput.text() + " <button class='btn btn-sm btn-danger' onclick='removeTag(this)'>x</button></span>");
+            var roleListItem = $("<span class='badge badge-light mr-2' data-role-id='" + roleInput.val() + "'>" + roleInput.text() + " <button class='btn btn-sm btn-danger' onclick='removeTag(this)'>x</button></span>");
 
             $("#rolesList").append(roleListItem);
 
@@ -65,31 +65,34 @@
         $(button).parent().remove();
     }
 
-    function editRoles() {
-        var selectedRoles = [];
-        $("#rolesList [data-role-id]").each(function () {
-            selectedRoles.push($(this).data("role-id"));
+    $(document).ready(function () {
+        var UserEditForm = $('#UserEditForm');
+        validateUserRoleForm(UserEditForm, function (form) {
+            var selectedRoles = [];
+            $("#rolesList [data-role-id]").each(function () {
+                selectedRoles.push($(this).data("role-id"));
+            });
+            var userRoleData = {
+                UserId: $("#userId").val(),
+                RoleIds: selectedRoles,
+
+            };
+
+
+            $.ajax({
+                type: "PUT",
+                url: "/api/userRole/Edit",
+                contentType: "application/json",
+                data: JSON.stringify(userRoleData),
+                success: function (response) {
+
+                    window.location.href = '/user/'.concat(userRoleData.UserId);
+                },
+                error: function (error) {
+
+                    console.error(error);
+                }
+            });
         });
-        var userRoleData = {
-            UserId: $("#userId").val(),
-            RoleIds: selectedRoles,
-
-        };
-
-
-        $.ajax({
-            type: "PUT",
-            url: "/api/userRole/Edit",
-            contentType: "application/json",
-            data: JSON.stringify(userRoleData),
-            success: function (response) {
-
-                window.location.href = '/user/'.concat(userRoleData.UserId);
-            },
-            error: function (error) {
-
-                console.error(error);
-            }
-        });
-    }
+    });
 </script>

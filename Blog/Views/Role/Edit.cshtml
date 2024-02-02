@@ -6,8 +6,8 @@
 }
 <script>
     $(document).ready(function () {
-        $('#RoleEditForm').submit(function (event) {
-            event.preventDefault();
+        var RoleEditForm = $('#RoleEditForm');
+        validateRoleForm(RoleEditForm, function (form) {
 
             var formData = {
                 Id: $('#Id').val(),

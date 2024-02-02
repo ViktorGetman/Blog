@@ -4,13 +4,12 @@
 }
 <script>
     $(document).ready(function () {
-        $('#CommentEditForm').submit(function (event) {
-            event.preventDefault();
-
+        var CommentEditForm = $('#CommentEditForm');
+        validateCommentForm(CommentEditForm, function (form) {
             var formData = {
                 Id: $('#Id').val(),
                 Content: $('#Content').val(),
-               };
+            };
 
             $.ajax({
                 type: 'PUT',

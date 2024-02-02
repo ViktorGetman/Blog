@@ -93,30 +93,5 @@ function deleteRole(roleId) {
         });
 
 
-    $(document).ready(function () {
-        $('#authorizationForm').submit(function (event) {
-            event.preventDefault();
 
-            var formData = {
-                Email: $('#Email').val(),
-                Password: $('#Password').val(),
-
-            };
-
-            $.ajax({
-                type: 'POST',
-                CORS: true,
-                url: '/api/login',  // Укажите правильный URL для вашего API
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function (data) {
-                    console.log('Успех', data);
-                    window.location.href = '/home';
-                },
-                error: function (error) {
-                    console.error('Ошибка', error);
-                }
-            });
-        });
-    });
 

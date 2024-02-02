@@ -13,14 +13,16 @@ namespace Blog.Controllers.Api
     {
 
 
-        private IPostService _service;
-        private IMapper _mapper;
+        private readonly IPostService _service;
+        private readonly IMapper _mapper;
+        private readonly ILogger<PostController> _logger;
 
-        public PostController(IPostService service, IMapper mapper)
+        public PostController(IPostService service, IMapper mapper, ILogger<PostController> logger)
         {
 
             _service = service;
             _mapper = mapper;
+            _logger = logger;
         }
 
 
@@ -50,7 +52,7 @@ namespace Blog.Controllers.Api
         {
             var model = _mapper.Map<AddPostDto, PostModel>(request);
             await _service.Create(model);
-
+            _logger.LogInformation("Добавлен пост пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
         }
 
@@ -63,6 +65,7 @@ namespace Blog.Controllers.Api
 
             var model = _mapper.Map<UpdatePostDto, PostModel>(dto);
             await _service.Update(model);
+            _logger.LogInformation("Изменен пост пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }
@@ -74,7 +77,7 @@ namespace Blog.Controllers.Api
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             await _service.Delete(id);
-
+            _logger.LogInformation("Удален пост пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }

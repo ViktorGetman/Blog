@@ -15,14 +15,16 @@ namespace Blog.Controllers.Api
     {
 
 
-        private IUserService _service;
-        private IMapper _mapper;
+        private readonly IUserService _service;
+        private readonly IMapper _mapper;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService service, IMapper mapper)
+        public UserController(IUserService service, IMapper mapper, ILogger<UserController> logger)
         {
 
             _service = service;
             _mapper = mapper;
+            _logger = logger;
         }
 
 
@@ -52,7 +54,7 @@ namespace Blog.Controllers.Api
         {
             var model = _mapper.Map<AddUserDto, CreateUserModel>(request);
             await _service.Create(model);
-
+            _logger.LogInformation("Пользователь зарегистрирован (email={email})", User.Identity?.Name);
             return StatusCode(200);
         }
 
@@ -65,6 +67,7 @@ namespace Blog.Controllers.Api
 
             var model = _mapper.Map<UpdateUserDto, UserModel>(dto);
             await _service.Update(model);
+            _logger.LogInformation("Пользователь изменил свои данные (email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }
@@ -80,7 +83,7 @@ namespace Blog.Controllers.Api
             {
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             }
-
+            _logger.LogInformation("Пользователь удален(email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }

@@ -13,11 +13,12 @@ namespace Blog.Controllers.Api
     public class AuthenticationController : Controller
     {
         private readonly IAuthenticationService _service;
+        private readonly ILogger<AuthenticationController> _logger;
 
-        public AuthenticationController(IAuthenticationService service)
+        public AuthenticationController(IAuthenticationService service, ILogger<AuthenticationController> logger)
         {
             _service = service;
-            
+            _logger = logger;
         }
 
 
@@ -28,6 +29,7 @@ namespace Blog.Controllers.Api
             var models = await _service.Login(loginDto.Email, loginDto.Password);
             if (models == null)
             {
+                _logger.LogInformation("Неудачная попытка авторизации (email={email})", loginDto.Email);
                 return StatusCode(401, "Неверный логин или пароль");
             }
             var roleClaims = models.Roles.Select(x => new Claim(ClaimTypes.Role, x.RoleType.ToString()));
@@ -41,6 +43,7 @@ namespace Blog.Controllers.Api
             var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+            _logger.LogInformation("Пользователь вошел в аккаунт(email={email})", loginDto.Email);
             return StatusCode(200, "Успешная авторизация");
         }
 
@@ -49,7 +52,9 @@ namespace Blog.Controllers.Api
         [Authorize]
         public async Task<IActionResult> Logout()
         {
+            var userEmail = User.Identity?.Name;
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            _logger.LogInformation("Пользователь вышел из аккаунта (email={email})", userEmail);
             return StatusCode(200, "Успешная деавторизация");
         }
 

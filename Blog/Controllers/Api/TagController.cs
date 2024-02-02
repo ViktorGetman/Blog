@@ -13,14 +13,16 @@ namespace Blog.Controllers.Api
     {
 
 
-        private ITagService _service;
-        private IMapper _mapper;
+        private readonly ITagService _service;
+        private readonly IMapper _mapper;
+        private readonly ILogger<TagController> _logger;
 
-        public TagController(ITagService service, IMapper mapper)
+        public TagController(ITagService service, IMapper mapper, ILogger<TagController> logger)
         {
 
             _service = service;
             _mapper = mapper;
+            _logger = logger;
         }
 
 
@@ -50,7 +52,7 @@ namespace Blog.Controllers.Api
         {
             var model = _mapper.Map<AddTagDto, TagModel>(request);
             await _service.Create(model);
-
+            _logger.LogInformation("Добавлен тэг пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
         }
 
@@ -63,6 +65,7 @@ namespace Blog.Controllers.Api
 
             var model = _mapper.Map<UpdateTagDto, TagModel>(dto);
             await _service.Update(model);
+            _logger.LogInformation("Изменен тэг пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }
@@ -74,7 +77,7 @@ namespace Blog.Controllers.Api
         public async Task<IActionResult> Delete([FromRoute] long id)
         {
             await _service.Delete(id);
-
+            _logger.LogInformation("Удален тэг пользователем (email={email})", User.Identity?.Name);
             return StatusCode(200);
 
         }

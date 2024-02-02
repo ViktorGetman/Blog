@@ -4,29 +4,30 @@
 }
 <script>
     $(document).ready(function () {
-        $('#CommentAddForm').submit(function (event) {
-            event.preventDefault();
+            var CommentAddForm = $('#CommentAddForm');
+            validateCommentForm(CommentAddForm, function (form) {
 
-            var formData = {
-                PostId: $('#PostId').val(),
-                UserId: $('#UserId').val(),
-                Content: $('#Content').val(),
-            };
+                var formData = {
+                    PostId: $('#PostId').val(),
+                    UserId: $('#UserId').val(),
+                    Content: $('#Content').val(),
+                };
 
-            $.ajax({
-                type: 'POST',
-                CORS: true,
-                url: '/api/comment',
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function (data) {
-                    window.location.href = '/postDetail/'.concat(formData.PostId);
-                },
-                error: function (error) {
-                    console.error('Ошибка', error);
-                }
+                $.ajax({
+                    type: 'POST',
+                    CORS: true,
+                    url: '/api/comment',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (data) {
+                        window.location.href = '/postDetail/'.concat(formData.PostId);
+                    },
+                    error: function (error) {
+                        console.error('Ошибка', error);
+                    }
+                });
             });
-        });
+
     });
 </script>
 

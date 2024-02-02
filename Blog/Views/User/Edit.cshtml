@@ -1,7 +1,7 @@
 ﻿<script>
     $(document).ready(function () {
-        $('#UserEditForm').submit(function (event) {
-            event.preventDefault();
+            var UserEditForm = $('#UserEditForm');
+            validateRegistrationForm(UserEditForm, function (form) {
 
             var formData = {
                 Id: $('#Id').val(),

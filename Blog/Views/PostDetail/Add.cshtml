@@ -25,7 +25,7 @@
                 <div id="tagsList" class="mt-2"></div>
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="createPost()">Создать</button>
+            <button type="submit" class="btn btn-primary">Создать</button>
         </form>
     </div>
 
@@ -50,29 +50,32 @@
             $(button).parent().remove();
         }
 
-        function createPost() {
-           
-            var postData = {
-                PostName: $("#postName").val(),
-                PostContent: $("#postContent").val(),
-                Tags: $("#tagsList .badge").map(function () { return $(this).text().replace('x', '').trim(); }).get(),
-                UserId: $("#UserId").val(), 
-            };
+        $(document).ready(function () {
+            var createPostForm = $('#createPostForm');
+            validatePostForm(createPostForm, function (form) {
+                var postData = {
+                    PostName: $("#postName").val(),
+                    PostContent: $("#postContent").val(),
+                    Tags: $("#tagsList .badge").map(function () { return $(this).text().replace('x', '').trim(); }).get(),
+                    UserId: $("#UserId").val(),
+                };
 
-            
-            $.ajax({
-                type: "POST",
-                url: "/api/post/",
-                contentType: "application/json",
-                data: JSON.stringify(postData),
-                success: function (response) {
-                    
-                    window.location.href='/home'
-                },
-                error: function (error) {
-                    
-                    console.error(error);
-                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/post/",
+                    contentType: "application/json",
+                    data: JSON.stringify(postData),
+                    success: function (response) {
+
+                        window.location.href = '/home'
+                    },
+                    error: function (error) {
+
+                        console.error(error);
+                    }
+                });
             });
-        }
+        });
+
     </script>
