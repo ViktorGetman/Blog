@@ -15,7 +15,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="~/js/validation.js"></script>   
     <script src="~/js/bootstrap.min.js"></script>
-
+    <script src="~/js/authentication.js"></script>
+    <script src="~/js/blog.js"></script>
     <div class="container">
         <header>
             <div class="d-flex justify-content-between">
@@ -57,7 +58,7 @@
                 <div>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a class="navbar-brand" id="logoutButton" href="#">Выход</a>
+                        <a class="navbar-brand" onclick="logout()" href="#">Выход</a>
 
                         <a class="navbar-brand" href="/User/@User.FindFirst("Id")?.Value">@User.Identity.Name</a>
 
@@ -79,9 +80,6 @@
             &copy; 2023 Мой сайт
         </footer>
     </div>
-
-    <script src="~/js/blog.js"></script>
-
 </body>
 </html>
 

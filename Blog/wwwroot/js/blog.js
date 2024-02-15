@@ -78,20 +78,6 @@ function deleteRole(roleId) {
     }
 }
 
-    $('#logoutButton').click(function () {
-        $.ajax({
-            type: 'POST',
-            url: '/api/logout', // Укажите правильный URL для вашего API
-            success: function () {
-                // Перенаправление на страницу авторизации после успешного выхода
-                window.location.href = '/user/authorization'; // Укажите правильный URL для страницы авторизации
-            },
-            error: function (error) {
-                console.error('Ошибка выхода', error);
-            }
-        });
-        });
-
 
 
 

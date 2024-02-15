@@ -12,8 +12,8 @@
                 digits: true
             },
             Password: {
-                required: true,
-                minlength: 6
+                required: true, 
+                minlength: 1
             },
             ConfirmPassword: {
                 required: true,
